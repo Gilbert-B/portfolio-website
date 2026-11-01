@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site';
+import { SERVICES } from '../data/services';
+---
+
+<Base>
+  <section class="hero">
+    <p class="eyebrow">{SITE.role} · {SITE.location}</p>
+    <h1>Clear, reliable reporting for growing businesses.</h1>
+    <p class="lead">
+      I help small and medium-sized businesses turn scattered data into dashboards and reports
+      they can trust. I have worked with data, business intelligence and ERP systems since {SITE.since}, across IT startups, telecom and fintech.
+    </p>
+    <div class="actions">
+      <a class="btn" href="/contact/">Start a conversation</a>
+      <a class="btn secondary" href="/services/">See services</a>
+    </div>
+  </section>
+
+  <h2>How I can help</h2>
+  <div class="grid">
+    {SERVICES.map((s) => (
+      <div class="card">
+        <h3>{s.title}</h3>
+        <p>{s.summary}</p>
+      </div>
+    ))}
+  </div>
+
+  <h2>Tools I work with</h2>
+  <ul class="tags">
+    {['Excel', 'Power BI', 'SQL', 'Apache Superset', 'Microsoft Report Builder', 'SAP Business One', 'Microsoft Dynamics', 'Zoho', 'Biz360'].map((t) => <li>{t}</li>)}
+  </ul>
+
+  <h2>Currently building</h2>
+  <p class="prose">
+    I am expanding into analytics engineering — data modelling, tested data pipelines and
+    automated reporting. I am documenting that work openly as portfolio projects.
+    <a href="/projects/">Follow the projects</a>.
+  </p>
+</Base>
+
+<style>
+  .hero { padding: 1.5rem 0 1rem; }
+</style>

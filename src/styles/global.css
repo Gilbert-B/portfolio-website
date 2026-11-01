@@ -1,0 +1,88 @@
+/* Design tokens — change colours and spacing here, not in components. */
+:root {
+  --bg: #fbfbf9;
+  --surface: #ffffff;
+  --text: #1c2321;
+  --muted: #5b6662;
+  --border: #e3e6e3;
+  --accent: #0f6e63;
+  --accent-soft: #e5f2ef;
+  --radius: 10px;
+  --max: 68rem;
+  --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111615;
+    --surface: #171e1c;
+    --text: #e7ecea;
+    --muted: #9aa8a3;
+    --border: #2a3431;
+    --accent: #4fc1b0;
+    --accent-soft: #19302c;
+    color-scheme: dark;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+a { color: var(--accent); text-underline-offset: 0.18em; }
+a:hover { text-decoration-thickness: 2px; }
+
+h1, h2, h3 { line-height: 1.2; letter-spacing: -0.01em; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); margin: 0 0 1rem; }
+h2 { font-size: clamp(1.4rem, 3vw, 1.85rem); margin: 2.5rem 0 1rem; }
+h3 { font-size: 1.15rem; margin: 0 0 0.5rem; }
+
+.container { max-width: var(--max); margin: 0 auto; padding: 0 1rem; }
+@media (min-width: 48rem) { .container { padding: 0 2rem; } }
+
+main { padding: 3rem 0 4rem; }
+
+.lead { font-size: 1.2rem; color: var(--muted); max-width: 42rem; }
+.muted { color: var(--muted); }
+.eyebrow {
+  text-transform: uppercase; letter-spacing: 0.08em;
+  font-size: 0.8rem; font-weight: 600; color: var(--accent); margin: 0 0 0.75rem;
+}
+
+.btn {
+  display: inline-block; padding: 0.7rem 1.2rem; border-radius: var(--radius);
+  background: var(--accent); color: var(--bg); font-weight: 600; text-decoration: none;
+}
+.btn:hover { opacity: 0.9; }
+.btn.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
+
+.grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); }
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.25rem 1.35rem;
+}
+.card p { margin: 0.25rem 0 0; color: var(--muted); }
+
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0; margin: 0; list-style: none; }
+.tags li {
+  background: var(--accent-soft); color: var(--accent);
+  border-radius: 999px; padding: 0.2rem 0.7rem; font-size: 0.875rem;
+}
+
+.notice {
+  border-left: 3px solid var(--accent); background: var(--accent-soft);
+  padding: 1rem 1.25rem; border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.prose { max-width: 42rem; }
