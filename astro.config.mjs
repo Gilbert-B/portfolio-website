@@ -2,4 +2,7 @@
 import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  // Live address; update when a custom domain is added.
+  site: 'https://portfolio-website.gilsa.workers.dev',
+});

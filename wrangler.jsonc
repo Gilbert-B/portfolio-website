@@ -1,0 +1,12 @@
+// Cloudflare Workers deploy settings: serve the static Astro build from dist/.
+{
+  "name": "portfolio-website",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    // Serve src/pages/404.astro for unknown URLs instead of a blank 404.
+    "not_found_handling": "404-page"
+  },
+  // Lets Cloudflare build a preview URL for each pull request branch.
+  "previews": {}
+}
