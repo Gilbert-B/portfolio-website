@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site';
+---
+
+<Base title="About">
+  <div class="prose">
+    <h1>About</h1>
+    <p class="lead">
+      I'm {SITE.name}, a data and business intelligence analyst based in {SITE.location}.
+    </p>
+
+    <p>
+      Since {SITE.since} I have worked across data analysis, business intelligence, ERP systems
+      and product management in IT startups, telecom and fintech. My work has included building
+      dashboards, implementing SAP Business One and training the people who use these systems
+      every day.
+    </p>
+    <p>
+      That mix means I look at data from both sides: the technical side of getting it out of
+      systems and into shape, and the business side of making sure the numbers answer real
+      questions and that people know how to use them.
+    </p>
+
+    <h2>What I'm learning now</h2>
+    <p>
+      I am building skills in analytics engineering — SQL data modelling, dbt, data testing and
+      automated pipelines. Rather than just collecting certificates, I am building real
+      projects on realistic business problems and publishing them on the
+      <a href="/projects/">projects page</a>, including what worked and what didn't.
+    </p>
+
+    <h2>How I work</h2>
+    <ul>
+      <li>Start with the business question, not the tool.</li>
+      <li>Keep solutions simple enough for your team to maintain.</li>
+      <li>Document the logic so numbers can be checked and trusted.</li>
+      <li>Be honest about what the data can and cannot tell you.</li>
+    </ul>
+  </div>
+</Base>

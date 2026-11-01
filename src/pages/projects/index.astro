@@ -1,0 +1,38 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Base title="Projects" description="Analytics and analytics-engineering projects built on realistic business problems.">
+  <h1>Projects</h1>
+  <p class="lead">
+    Analytics projects built on realistic business problems, with the code published on GitHub.
+    Each case study explains the problem, the approach, the decisions and the results.
+  </p>
+
+  {projects.length === 0 ? (
+    <p class="notice">
+      The first projects are in progress. They will appear here as each one is completed and
+      checked — no placeholders.
+    </p>
+  ) : (
+    <div class="grid">
+      {projects.map((p) => (
+        <a class="card link" href={`/projects/${p.id}/`}>
+          <p class="eyebrow">{p.data.status === 'complete' ? 'Case study' : 'In progress'}</p>
+          <h3>{p.data.title}</h3>
+          <p>{p.data.summary}</p>
+          <ul class="tags">{p.data.tools.map((t) => <li>{t}</li>)}</ul>
+        </a>
+      ))}
+    </div>
+  )}
+</Base>
+
+<style>
+  .link { text-decoration: none; color: inherit; display: block; }
+  .link:hover { border-color: var(--accent); }
+  .link .tags { margin-top: 1rem; }
+</style>
