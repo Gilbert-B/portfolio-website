@@ -10,6 +10,12 @@
   --radius: 10px;
   --max: 68rem;
   --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  /* Unpacked by GilB brand — used only in that project's section */
+  --gilb-navy: #071629;
+  --gilb-teal: #0e4a5c;
+  --gilb-cream: #f6f0e4;
+  --gilb-gold: #e3a640;
+  --gilb-gold-text: #8a5f12; /* gold that stays readable on light backgrounds */
   color-scheme: light;
 }
 
@@ -22,6 +28,7 @@
     --border: #2a3431;
     --accent: #4fc1b0;
     --accent-soft: #19302c;
+    --gilb-gold-text: #e3a640;
     color-scheme: dark;
   }
 }
@@ -86,3 +93,12 @@ main { padding: 3rem 0 4rem; }
 }
 
 .prose { max-width: 42rem; }
+
+/* Blue-black Unpacked panel (always dark, in both colour schemes) */
+.gilb-panel {
+  background: radial-gradient(120% 90% at 0% 0%, var(--gilb-teal) 0%, var(--gilb-navy) 50%, var(--gilb-navy) 100%);
+  color: var(--gilb-cream);
+  border-radius: calc(var(--radius) * 1.4);
+}
+.gilb-panel a { color: var(--gilb-gold); }
+.gilb-panel .btn { background: var(--gilb-gold); color: var(--gilb-navy); }

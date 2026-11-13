@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
+import FeaturedCard from '../../components/unpacked/FeaturedCard.astro';
 
 const projects = (await getCollection('projects')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
@@ -8,14 +9,17 @@ const projects = (await getCollection('projects')).sort((a, b) => b.data.date.va
 <Base title="Projects" description="Analytics and analytics-engineering projects built on realistic business problems.">
   <h1>Projects</h1>
   <p class="lead">
-    Analytics projects built on realistic business problems, with the code published on GitHub.
-    Each case study explains the problem, the approach, the decisions and the results.
+    Data research and analytics work on real public data. Each case study explains the
+    question, the approach, the decisions and the results — including what the data can't show.
   </p>
 
+  <FeaturedCard />
+
+  <h2>Analytics engineering projects</h2>
   {projects.length === 0 ? (
     <p class="notice">
-      The first projects are in progress. They will appear here as each one is completed and
-      checked — no placeholders.
+      Data modelling and pipeline projects are in progress. They will appear here as each one is
+      completed and checked — no placeholders.
     </p>
   ) : (
     <div class="grid">

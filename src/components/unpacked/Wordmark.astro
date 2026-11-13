@@ -1,0 +1,33 @@
+---
+// GilB. wordmark. "Gil" uses the current text colour; the B and dot are always gold.
+interface Props {
+  width?: number;
+  class?: string;
+}
+const { width = 160, class: className } = Astro.props;
+---
+
+<svg
+  class={className}
+  width={width}
+  height={Math.round((width * 380) / 980)}
+  viewBox="0 310 980 380"
+  role="img"
+  aria-label="GilB."
+>
+  <path d="M288.1 411.7 A132 132 0 1 0 322 500" fill="none" stroke="currentColor" stroke-width="76" />
+  <g fill="currentColor">
+    <rect x="198" y="462" width="162" height="68" />
+    <rect x="394" y="430" width="72" height="240" />
+    <circle cx="430" cy="368" r="40" />
+    <rect x="498" y="330" width="72" height="340" />
+  </g>
+  <rect x="600" y="332" width="72" height="336" fill="#C99A3E" />
+  <path
+    d="M636 368 H740 A64 64 0 0 1 740 496 H636 M636 496 H750 A68 68 0 0 1 750 632 H636"
+    fill="none"
+    stroke="#C99A3E"
+    stroke-width="72"
+  />
+  <circle cx="912" cy="628" r="42" fill="#E3A640" />
+</svg>

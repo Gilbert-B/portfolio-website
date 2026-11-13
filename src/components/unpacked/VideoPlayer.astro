@@ -1,0 +1,27 @@
+---
+// Vertical 9:16 player. preload="none" means nothing downloads until the visitor presses play.
+interface Props {
+  src: string;
+  poster: string;
+  title: string;
+  duration: string;
+}
+const { src, poster, title, duration } = Astro.props;
+---
+
+<figure class="player">
+  <video controls playsinline preload="none" poster={poster} aria-label={`${title} — video, ${duration}`}>
+    <source src={src} type="video/mp4" />
+    <a href={src}>Download the video</a>
+  </video>
+  <figcaption>Final video · {duration} · with narration</figcaption>
+</figure>
+
+<style>
+  .player { margin: 0; max-width: 22rem; }
+  video {
+    display: block; width: 100%; aspect-ratio: 9 / 16; height: auto;
+    border-radius: var(--radius); background: var(--gilb-navy); object-fit: cover;
+  }
+  figcaption { font-size: 0.875rem; color: var(--muted); margin-top: 0.5rem; }
+</style>
