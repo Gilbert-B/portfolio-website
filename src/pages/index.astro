@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import { SITE } from '../site';
 import { SERVICES } from '../data/services';
+import FeaturedCard from '../components/unpacked/FeaturedCard.astro';
 ---
 
 <Base>
@@ -28,6 +29,9 @@ import { SERVICES } from '../data/services';
     ))}
   </div>
 
+  <h2>Featured work</h2>
+  <FeaturedCard />
+
   <h2>Tools I work with</h2>
   <ul class="tags">
     {['Excel', 'Power BI', 'SQL', 'Apache Superset', 'Microsoft Report Builder', 'SAP Business One', 'Microsoft Dynamics', 'Zoho', 'Biz360'].map((t) => <li>{t}</li>)}
@@ -36,8 +40,8 @@ import { SERVICES } from '../data/services';
   <h2>Currently building</h2>
   <p class="prose">
     I am expanding into analytics engineering — data modelling, tested data pipelines and
-    automated reporting. I am documenting that work openly as portfolio projects.
-    <a href="/projects/">Follow the projects</a>.
+    automated reporting. Those projects will be added to the portfolio as each one is
+    completed. <a href="/projects/">See all projects</a>.
   </p>
 </Base>
 

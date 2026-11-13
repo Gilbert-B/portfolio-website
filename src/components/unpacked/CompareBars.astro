@@ -1,0 +1,38 @@
+---
+// Simple horizontal bar comparison. Bars are scaled to the largest value in the set.
+interface Props {
+  title: string;
+  note?: string;
+  items: { label: string; value: number; display: string }[];
+}
+const { title, note, items } = Astro.props;
+const max = Math.max(...items.map((i) => i.value));
+---
+
+<figure class="compare">
+  <figcaption>{title}</figcaption>
+  <dl>
+    {items.map((item) => (
+      <div class="row">
+        <dt>{item.label}</dt>
+        <dd>
+          <span class="bar" style={`width:${((item.value / max) * 100).toFixed(1)}%`}></span>
+          <span class="val">{item.display}</span>
+        </dd>
+      </div>
+    ))}
+  </dl>
+  {note && <p class="note">{note}</p>}
+</figure>
+
+<style>
+  .compare { margin: 1.5rem 0; padding: 1.1rem 1.25rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+  figcaption { font-weight: 600; margin-bottom: 0.75rem; }
+  dl { margin: 0; display: grid; gap: 0.6rem; }
+  .row { display: grid; gap: 0.2rem; }
+  dt { font-size: 0.9rem; color: var(--muted); }
+  dd { margin: 0; display: flex; align-items: center; gap: 0.6rem; }
+  .bar { height: 0.7rem; border-radius: 999px; background: var(--gilb-gold); min-width: 2px; }
+  .val { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .note { margin: 0.75rem 0 0; font-size: 0.85rem; color: var(--muted); }
+</style>
