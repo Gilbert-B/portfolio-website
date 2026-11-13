@@ -1,0 +1,44 @@
+---
+// Featured-work tile for Unpacked by GilB, used on Home and Projects.
+import Wordmark from './Wordmark.astro';
+import { getEpisodes, UNPACKED } from '../../data/unpacked';
+
+const episodes = await getEpisodes();
+const domains = [...new Set(episodes.map((e) => e.data.domain))];
+---
+
+<a class="gilb-panel featured" href="/projects/unpacked/">
+  <div class="text">
+    <p class="kicker">Featured project · Ongoing</p>
+    <p class="by">Unpacked by</p>
+    <Wordmark width={150} />
+    <h3>Independent Data Research &amp; Storytelling</h3>
+    <p class="pitch">{UNPACKED.pitch}</p>
+    <ul class="domains">{domains.map((d) => <li>{d}</li>)}</ul>
+    <span class="go">{episodes.length} case studies →</span>
+  </div>
+  <div class="posters" aria-hidden="true">
+    {episodes.slice(0, 3).map((e) => (
+      <img src={e.data.video.poster} alt="" width="720" height="1280" loading="lazy" decoding="async" />
+    ))}
+  </div>
+</a>
+
+<style>
+  .featured {
+    display: grid; gap: 1.5rem; padding: 1.5rem; text-decoration: none;
+    color: var(--gilb-cream); overflow: hidden;
+  }
+  @media (min-width: 48rem) { .featured { grid-template-columns: 1.1fr 1fr; padding: 2rem 2.25rem; align-items: center; } }
+  .featured:hover .go { text-decoration: underline; }
+  .kicker { margin: 0 0 1rem; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gilb-gold); font-weight: 600; }
+  .by { margin: 0 0 -0.1rem; color: #c9cdd3; font-weight: 600; }
+  h3 { margin: 0.9rem 0 0.4rem; color: var(--gilb-cream); font-size: 1.2rem; }
+  .pitch { margin: 0; color: #d9dde3; }
+  .domains { display: flex; flex-wrap: wrap; gap: 0.4rem; list-style: none; padding: 0; margin: 1rem 0 0; }
+  .domains li { font-size: 0.8rem; padding: 0.2rem 0.65rem; border: 1px solid rgba(246, 240, 228, 0.25); border-radius: 999px; color: #d9dde3; }
+  .go { display: inline-block; margin-top: 1.1rem; color: var(--gilb-gold); font-weight: 600; }
+  .posters { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+  .posters img { width: 100%; height: auto; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35); }
+  .posters img:nth-child(2) { transform: translateY(-0.75rem); }
+</style>

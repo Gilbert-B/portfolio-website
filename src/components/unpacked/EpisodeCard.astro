@@ -1,0 +1,33 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  episode: CollectionEntry<'unpacked'>;
+}
+const { episode } = Astro.props;
+const { title, domain, summary, video } = episode.data;
+---
+
+<a class="episode" href={`/projects/unpacked/${episode.id}/`}>
+  <img src={video.poster} alt="" width="720" height="1280" loading="lazy" decoding="async" />
+  <div class="body">
+    <p class="domain">{domain}</p>
+    <h3>{title}</h3>
+    <p class="summary">{summary}</p>
+    <span class="more">Read the case study →</span>
+  </div>
+</a>
+
+<style>
+  .episode {
+    display: grid; grid-template-columns: 7rem 1fr; gap: 1rem; align-items: start;
+    text-decoration: none; color: inherit; background: var(--surface);
+    border: 1px solid var(--border); border-radius: var(--radius); padding: 0.85rem;
+  }
+  .episode:hover { border-color: var(--accent); }
+  img { width: 100%; height: auto; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 6px; background: var(--gilb-navy); }
+  .domain { margin: 0 0 0.35rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gilb-gold-text); }
+  h3 { margin: 0 0 0.4rem; font-size: 1.1rem; }
+  .summary { margin: 0; color: var(--muted); font-size: 0.95rem; }
+  .more { display: inline-block; margin-top: 0.6rem; color: var(--accent); font-weight: 600; font-size: 0.925rem; }
+</style>

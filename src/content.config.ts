@@ -26,4 +26,40 @@ const notes = defineCollection({
   }),
 });
 
-export const collections = { projects, notes };
+// Unpacked by GilB episodes. One Markdown file per story; the body holds the case study.
+// Only episodes with `approved: true` are built, so drafts can live here safely.
+const unpacked = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/unpacked' }),
+  schema: z
+    .object({
+      storyId: z.string().regex(/^GILB-\d{3}$/),
+      title: z.string(),
+      domain: z.string(),
+      summary: z.string(),
+      order: z.number(),
+      approved: z.boolean(),
+      status: z.enum(['production-complete', 'published']),
+      publishedUrl: z.string().url().optional(),
+      video: z.object({
+        src: z.string(),
+        poster: z.string(),
+        duration: z.string(),
+      }),
+      keyFigures: z.array(z.object({ value: z.string(), label: z.string() })).max(4),
+      compare: z
+        .object({
+          title: z.string(),
+          note: z.string().optional(),
+          items: z.array(z.object({ label: z.string(), value: z.number(), display: z.string() })),
+        })
+        .optional(),
+      methods: z.array(z.string()),
+      sources: z.array(z.object({ label: z.string(), url: z.string().url() })),
+    })
+    // A "published" episode must point at its real post.
+    .refine((e) => e.status !== 'published' || e.publishedUrl, {
+      message: 'Published episodes need a publishedUrl',
+    }),
+});
+
+export const collections = { projects, notes, unpacked };
