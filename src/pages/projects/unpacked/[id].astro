@@ -1,0 +1,109 @@
+---
+import Base from '../../../layouts/Base.astro';
+import VideoPlayer from '../../../components/unpacked/VideoPlayer.astro';
+import CompareBars from '../../../components/unpacked/CompareBars.astro';
+import Wordmark from '../../../components/unpacked/Wordmark.astro';
+import { render } from 'astro:content';
+import { getEpisodes, UNPACKED } from '../../../data/unpacked';
+
+export async function getStaticPaths() {
+  const episodes = await getEpisodes();
+  return episodes.map((episode, i) => ({
+    params: { id: episode.id },
+    props: { episode, prev: episodes[i - 1], next: episodes[i + 1] },
+  }));
+}
+
+const { episode, prev, next } = Astro.props;
+const { Content } = await render(episode);
+const d = episode.data;
+---
+
+<Base title={`${d.title} — ${UNPACKED.name}`} description={d.summary}>
+  <p class="crumb">
+    <a href="/projects/">Projects</a> / <a href="/projects/unpacked/">{UNPACKED.name}</a> / {d.storyId}
+  </p>
+
+  <header class="gilb-panel head">
+    <div class="brandline"><Wordmark width={70} /><span>{d.storyId} · {d.domain}</span></div>
+    <h1>{d.title}</h1>
+    <p class="summary">{d.summary}</p>
+    <dl class="figures">
+      {d.keyFigures.map((f) => (
+        <div><dt>{f.label}</dt><dd>{f.value}</dd></div>
+      ))}
+    </dl>
+  </header>
+
+  <div class="layout">
+    <article class="prose case">
+      <Content />
+      {d.compare && <CompareBars {...d.compare} />}
+    </article>
+
+    <aside class="story">
+      <h2>The final story</h2>
+      <VideoPlayer src={d.video.src} poster={d.video.poster} title={d.title} duration={d.video.duration} />
+      {d.status === 'published' && d.publishedUrl && (
+        <p><a href={d.publishedUrl}>Watch on the original platform →</a></p>
+      )}
+    </aside>
+  </div>
+
+  <section class="extra">
+    <div>
+      <h2>Methods &amp; skills</h2>
+      <ul class="tags">{d.methods.map((m) => <li>{m}</li>)}</ul>
+    </div>
+    <div>
+      <h2>Sources</h2>
+      <ul class="sources">
+        {d.sources.map((s) => <li><a href={s.url} rel="noopener">{s.label}</a></li>)}
+      </ul>
+      <p class="muted small">
+        Datasets, reproduction scripts and verification notes are kept in the project's
+        story archive. <a href="/contact/">Ask to see the supporting work</a>.
+      </p>
+    </div>
+  </section>
+
+  <nav class="pager" aria-label="More case studies">
+    {prev ? <a href={`/projects/unpacked/${prev.id}/`}>← {prev.data.title}</a> : <span></span>}
+    <a href="/projects/unpacked/">All case studies</a>
+    {next ? <a href={`/projects/unpacked/${next.id}/`}>{next.data.title} →</a> : <span></span>}
+  </nav>
+</Base>
+
+<style>
+  .crumb { font-size: 0.9rem; color: var(--muted); margin: 0 0 1rem; }
+  .head { padding: 1.75rem 1.5rem; }
+  @media (min-width: 48rem) { .head { padding: 2.25rem 2.5rem; } }
+  .brandline { display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; letter-spacing: 0.04em; color: #c9cdd3; margin-bottom: 1rem; }
+  .head h1 { color: var(--gilb-cream); margin-bottom: 0.5rem; }
+  .summary { color: #d9dde3; font-size: 1.15rem; max-width: 42rem; margin: 0; }
+  .figures { display: grid; gap: 1rem; margin: 1.75rem 0 0; grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr)); }
+  .figures div { border-top: 2px solid var(--gilb-gold); padding-top: 0.6rem; }
+  .figures dd { margin: 0; order: -1; font-size: 1.45rem; font-weight: 700; color: var(--gilb-cream); font-variant-numeric: tabular-nums; }
+  .figures div { display: flex; flex-direction: column; }
+  .figures dt { font-size: 0.85rem; color: #b8bfc8; }
+
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 3rem; margin-top: 1rem; }
+  @media (min-width: 60rem) {
+    .layout { grid-template-columns: minmax(0, 1fr) 20rem; }
+    .story { position: sticky; top: 1.5rem; align-self: start; }
+  }
+  .story h2 { margin-top: 2.5rem; }
+  .case :global(table) { width: 100%; border-collapse: collapse; font-size: 0.95rem; margin: 1rem 0; display: block; overflow-x: auto; }
+  .case :global(th), .case :global(td) { padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--border); text-align: left; }
+  .case :global(td) { white-space: nowrap; }
+  .case :global(th) { font-size: 0.85rem; vertical-align: bottom; }
+  .case :global(li) { margin-bottom: 0.4rem; }
+
+  .extra { display: grid; gap: 0 3rem; border-top: 1px solid var(--border); margin-top: 2.5rem; }
+  @media (min-width: 48rem) { .extra { grid-template-columns: 1fr 1fr; } }
+  .sources { padding-left: 1.2rem; }
+  .sources li { margin-bottom: 0.4rem; }
+  .small { font-size: 0.925rem; }
+
+  .pager { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem 1.5rem; margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--border); font-weight: 600; }
+</style>

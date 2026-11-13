@@ -1,6 +1,6 @@
 # gilbert-botchway website
 
-Personal portfolio site built with [Astro](https://astro.build), deployed to Cloudflare Pages.
+Personal portfolio site built with [Astro](https://astro.build), deployed to Cloudflare Workers (static assets, `wrangler.jsonc`).
 
 ## Run locally
 ```bash
@@ -19,7 +19,10 @@ npm run build    # static output in dist/
 | `src/pages/` | One file per page; the file path is the URL |
 | `src/content/projects/` | Case studies — one Markdown file each |
 | `src/content/notes/` | Short notes — one Markdown file each |
-| `src/content.config.ts` | Required front-matter fields for projects and notes |
+| `src/content/unpacked/` | Unpacked by GilB case studies — one Markdown file per episode |
+| `src/components/unpacked/` | Wordmark, video player, cards and comparison bars for Unpacked |
+| `public/unpacked/` | Episode videos (`video/`) and poster images (`posters/`) |
+| `src/content.config.ts` | Required front-matter fields for projects, notes and Unpacked episodes |
 
 ## Adding a case study
 Create `src/content/projects/my-project.md`:
@@ -34,3 +37,9 @@ date: 2026-11-15
 Body in Markdown…
 ```
 It appears on /projects/ and at /projects/my-project/.
+
+## Adding an Unpacked by GilB episode
+Copy `docs/unpacked-episode-template.md` to `src/content/unpacked/<short-name>.md` and fill
+it in. Put the final video at `public/unpacked/video/gilb-NNN.mp4` and a 720×1280 poster at
+`public/unpacked/posters/gilb-NNN-poster.jpg`. The episode only appears once `approved: true`.
+Keep each video under 25 MiB (the Cloudflare per-file limit).

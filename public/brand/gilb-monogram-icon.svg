@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="GilB monogram">
+  <defs>
+    <radialGradient id="bg" cx="0" cy="0" r="1.2" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#0E4A5C"/>
+      <stop offset="0.6" stop-color="#071629"/>
+      <stop offset="1" stop-color="#0B2338"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <!-- G. centred: artwork spans 452 x 340 units, scaled to 0.75 -->
+  <g transform="translate(256 256) scale(0.75) translate(-246 -500)">
+    <path d="M288.1 411.7 A132 132 0 1 0 322 500" fill="none" stroke="#F6F0E4" stroke-width="76"/>
+    <rect x="198" y="462" width="162" height="68" fill="#F6F0E4"/>
+    <circle cx="430" cy="628" r="42" fill="#E3A640"/>
+  </g>
+</svg>

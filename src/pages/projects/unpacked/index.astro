@@ -1,0 +1,138 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Wordmark from '../../../components/unpacked/Wordmark.astro';
+import EpisodeCard from '../../../components/unpacked/EpisodeCard.astro';
+import { getEpisodes, UNPACKED } from '../../../data/unpacked';
+import { SITE } from '../../../site';
+
+const episodes = await getEpisodes();
+
+const workflow = [
+  'Story discovery', 'Research', 'Data collection', 'Analysis', 'Independent verification',
+  'Script', 'Storyboard', 'Narration', 'Audio', 'Animation', 'Quality assurance',
+  'Final approval', 'Archive', 'Publication',
+];
+
+const principles = [
+  'Start with an interesting question, not a predetermined conclusion.',
+  'Prioritise reliable primary sources and original datasets.',
+  'Reproduce and verify important calculations.',
+  'Investigate conflicting or misleading statistics.',
+  'Distinguish observations from assumptions and causal explanations.',
+  'Acknowledge uncertainty and limitations.',
+  'Explain complex findings in accessible language.',
+  'Never present unsupported claims as facts.',
+];
+
+const skills = [
+  'Framing analytical questions',
+  'Working with public and regulatory datasets',
+  'Verifying calculations and challenging assumptions',
+  'Interpreting KPIs and comparisons accurately',
+  'Communicating findings to non-technical audiences',
+  'Running a structured, AI-assisted analytical workflow',
+];
+---
+
+<Base
+  title={UNPACKED.name}
+  description="Unpacked by GilB — independent data research and storytelling by Gilbert Botchway. Case studies on sport, telecoms, fintech and population data in Ghana."
+>
+  <p class="crumb"><a href="/projects/">Projects</a> / {UNPACKED.name}</p>
+
+  <section class="gilb-panel hero">
+    <p class="eyebrow-gilb">Unpacked by</p>
+    <Wordmark width={220} />
+    <p class="tagline">{UNPACKED.tagline}</p>
+    <p class="intro">
+      An independent data research and storytelling project. Each story takes a familiar
+      headline or statistic, goes to the official data, and investigates what the numbers
+      actually mean — then turns the findings into a short, narrated visual story.
+    </p>
+    <p class="idea">“I knew this, but I didn't know that.”</p>
+  </section>
+
+  <section class="message">
+    <h2>I don't just analyse data. I investigate what it means and communicate what matters.</h2>
+    <p class="lead">
+      Unpacked started with Ghana-focused stories and is designed to expand internationally.
+      It isn't tied to one industry — so far it has covered sport, telecommunications,
+      financial services and population data.
+    </p>
+  </section>
+
+  <h2 id="episodes">Case studies</h2>
+  <p class="muted">Each case study shows the question, the data, the method, what was found — and what the data cannot tell us.</p>
+  <div class="episodes">
+    {episodes.map((e) => <EpisodeCard episode={e} />)}
+  </div>
+
+  <div class="two-col">
+    <section>
+      <h2>My role</h2>
+      <p>I own the project and direct every story. Specifically, I am the:</p>
+      <ul>
+        <li><strong>Project owner and editor</strong> — choose topics and make editorial decisions</li>
+        <li><strong>Researcher</strong> — set the research direction and interpret the data</li>
+        <li><strong>Analytical reviewer</strong> — review findings and challenge claims</li>
+        <li><strong>Writer and narrator</strong> — refine scripts and record the narration in my own voice</li>
+        <li><strong>Final approver</strong> — evaluate visuals and approve every finished video</li>
+      </ul>
+      <p class="notice small">
+        <strong>How AI is used.</strong> I work with ChatGPT and Claude as research and
+        production collaborators: research and verification support, editorial development,
+        storyboard implementation, animation and technical production. The work is directed and
+        reviewed by me, and nothing is published without my approval.
+      </p>
+    </section>
+    <section>
+      <h2>Skills demonstrated</h2>
+      <ul class="checks">{skills.map((s) => <li>{s}</li>)}</ul>
+    </section>
+  </div>
+
+  <h2>How each story is made</h2>
+  <ol class="flow">{workflow.map((step) => <li>{step}</li>)}</ol>
+  <p class="muted small">
+    Every story has a permanent ID and a structured record of its sources, datasets, analysis,
+    verification notes, decisions and production assets.
+  </p>
+
+  <h2>Research principles</h2>
+  <ul class="principles">{principles.map((p) => <li>{p}</li>)}</ul>
+
+  <section class="gilb-panel cta">
+    <div>
+      <h2>Have data that hides a better story?</h2>
+      <p>The same approach works on business data: question the headline number, verify it, and explain what it really means.</p>
+    </div>
+    <a class="btn" href="/contact/">Talk to {SITE.name.split(' ')[0]}</a>
+  </section>
+</Base>
+
+<style>
+  .crumb { font-size: 0.9rem; color: var(--muted); margin: 0 0 1rem; }
+  .hero { padding: 2.25rem 1.5rem; text-align: center; display: grid; justify-items: center; gap: 0.5rem; }
+  @media (min-width: 48rem) { .hero { padding: 3rem 2.5rem; } }
+  .eyebrow-gilb { margin: 0 0 -0.25rem; font-weight: 600; font-size: 1.15rem; color: #c9cdd3; }
+  .tagline { margin: 0.25rem 0 0; font-style: italic; color: #d9d4ca; font-size: 1.1rem; }
+  .intro { max-width: 38rem; margin: 1rem auto 0; color: #d9dde3; }
+  .idea { margin: 0.75rem 0 0; color: var(--gilb-gold); font-weight: 600; }
+  .message h2 { max-width: 40rem; }
+  .episodes { display: grid; gap: 1rem; }
+  @media (min-width: 48rem) { .episodes { grid-template-columns: 1fr 1fr; } }
+  .two-col { display: grid; gap: 0 2.5rem; }
+  @media (min-width: 56rem) { .two-col { grid-template-columns: 3fr 2fr; } }
+  .small { font-size: 0.925rem; }
+  .checks, .principles { padding-left: 1.2rem; }
+  .checks li, .principles li { margin-bottom: 0.35rem; }
+  .flow { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0; margin: 0 0 0.75rem; list-style: none; counter-reset: step; }
+  .flow li {
+    counter-increment: step; font-size: 0.875rem; padding: 0.3rem 0.7rem; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--surface);
+  }
+  .flow li::before { content: counter(step) '. '; color: var(--gilb-gold-text); font-weight: 600; }
+  .cta { margin-top: 3rem; padding: 1.75rem 1.5rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
+  .cta h2 { margin: 0 0 0.4rem; color: var(--gilb-cream); }
+  .cta p { margin: 0; color: #d9dde3; max-width: 34rem; }
+</style>
