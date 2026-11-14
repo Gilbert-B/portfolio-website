@@ -1,0 +1,43 @@
+---
+// Unpacked by GilB block for Home and Projects: short intro + the case-study carousel.
+import Wordmark from './Wordmark.astro';
+import Carousel from './Carousel.astro';
+import { getEpisodes, UNPACKED } from '../../data/unpacked';
+
+const episodes = await getEpisodes();
+---
+
+<section class="showcase">
+  <div class="intro">
+    <div class="name">
+      <p class="kicker">Featured project · Ongoing</p>
+      <p class="by">Unpacked by</p>
+      <Wordmark width={130} />
+    </div>
+    <div class="text">
+      <h3>Independent Data Research &amp; Storytelling</h3>
+      <p>{UNPACKED.pitch}</p>
+      <p class="links">
+        <a href="/projects/unpacked/">About the project →</a>
+        <a href="/projects/unpacked/all/">View all {episodes.length} case studies →</a>
+      </p>
+    </div>
+  </div>
+  <Carousel episodes={episodes} />
+</section>
+
+<style>
+  .showcase {
+    padding: 1.25rem; border-radius: calc(var(--radius) * 1.4);
+    background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border);
+  }
+  @media (min-width: 48rem) { .showcase { padding: 1.75rem 2rem 1.5rem; } }
+  .intro { display: grid; gap: 0.75rem 2.5rem; margin-bottom: 1.25rem; }
+  @media (min-width: 48rem) { .intro { grid-template-columns: auto 1fr; align-items: end; } }
+  .kicker { margin: 0 0 0.6rem; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+  .by { margin: 0 0 -0.1rem; color: var(--muted); font-weight: 600; }
+  .name :global(svg) { color: var(--gilb-cream); }
+  h3 { margin: 0 0 0.35rem; }
+  .text p { margin: 0; color: var(--muted); max-width: 40rem; }
+  .text .links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem; margin-top: 0.75rem; font-weight: 600; }
+</style>
