@@ -1,20 +1,32 @@
 ---
-import { SITE } from '../site';
+import { SITE, NAV } from '../site';
 const year = new Date().getFullYear();
 ---
 
 <footer>
-  <div class="container row">
-    <p>© {year} {SITE.name} · {SITE.location}</p>
-    <p>
-      <a href={`mailto:${SITE.email}`}>Email</a>
-      {SITE.linkedin && <> · <a href={SITE.linkedin} rel="me">LinkedIn</a></>}
-    </p>
+  <div class="container">
+    <div class="cta">
+      <p class="big">Have numbers you don't fully trust? <span class="hl">Let's look at them together.</span></p>
+      <a class="btn" href="/contact/">Start a conversation →</a>
+    </div>
+    <div class="row">
+      <p>© {year} {SITE.name} · {SITE.location}</p>
+      <ul>
+        {NAV.filter((n) => n.href !== '/').map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+        <li><a href={`mailto:${SITE.email}`}>Email</a></li>
+        {SITE.linkedin && <li><a href={SITE.linkedin} rel="me">LinkedIn</a></li>}
+      </ul>
+    </div>
   </div>
 </footer>
 
 <style>
-  footer { border-top: 1px solid var(--border); color: var(--muted); font-size: 0.925rem; }
-  .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; padding-top: 1.5rem; padding-bottom: 1.5rem; }
+  footer { border-top: 1px solid var(--border); color: var(--muted); font-size: 0.925rem; background: rgba(0, 0, 0, 0.2); }
+  .cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.25rem 2rem; padding: 3rem 0 2.5rem; border-bottom: 1px solid var(--border); }
+  .big { margin: 0; font-family: var(--display); font-size: clamp(1.35rem, 3vw, 1.9rem); font-weight: 600; line-height: 1.2; color: var(--text); max-width: 36rem; letter-spacing: -0.015em; }
+  .row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.75rem 1.5rem; padding: 1.5rem 0 2rem; }
   p { margin: 0; }
+  ul { display: flex; flex-wrap: wrap; gap: 0.25rem 1.1rem; list-style: none; margin: 0; padding: 0; }
+  ul a { color: var(--muted); text-decoration: none; }
+  ul a:hover { color: var(--accent); }
 </style>

@@ -18,13 +18,20 @@ const fullTitle = title ? `${title} · ${SITE.name}` : `${SITE.name} — ${SITE.
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#050c17" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+    />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body>
     <Header />
@@ -34,5 +41,42 @@ const fullTitle = title ? `${title} · ${SITE.name}` : `${SITE.name} — ${SITE.
       </div>
     </main>
     <Footer />
+    <script>
+      // Reveal elements marked data-reveal as they scroll into view, and run
+      // count-ups (data-count) once. Skipped entirely when motion is reduced.
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      const counters = document.querySelectorAll<HTMLElement>('[data-count]');
+
+      const countUp = (el: HTMLElement) => {
+        const target = Number(el.dataset.count);
+        const decimals = Number(el.dataset.decimals ?? 0);
+        const start = performance.now();
+        const dur = 1400;
+        const fmt = (n: number) => n.toLocaleString('en-GB', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+        const tick = (now: number) => {
+          const p = Math.min(1, (now - start) / dur);
+          el.textContent = fmt(target * (1 - Math.pow(1 - p, 3)));
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      };
+
+      if (reduce || !('IntersectionObserver' in window)) {
+        els.forEach((el) => el.classList.add('in'));
+      } else {
+        const io = new IntersectionObserver((entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            e.target.classList.add('in');
+            e.target.querySelectorAll<HTMLElement>('[data-count]').forEach(countUp);
+            if ((e.target as HTMLElement).dataset.count) countUp(e.target as HTMLElement);
+            io.unobserve(e.target);
+          }
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+        els.forEach((el) => io.observe(el));
+        counters.forEach((c) => { if (!c.closest('[data-reveal]')) io.observe(c); });
+      }
+    </script>
   </body>
 </html>

@@ -5,8 +5,9 @@ import { SITE } from '../site';
 
 <Base title="About">
   <div class="prose">
-    <h1>About</h1>
-    <p class="lead">
+    <p class="eyebrow" data-reveal>About</p>
+    <h1 data-reveal style="--d:80ms">Data, from both <span class="hl">sides of the table.</span></h1>
+    <p class="lead" data-reveal style="--d:160ms">
       I'm {SITE.name}, a data and business intelligence analyst based in {SITE.location}.
     </p>
 
@@ -22,7 +23,7 @@ import { SITE } from '../site';
       questions and that people know how to use them.
     </p>
 
-    <h2>What I'm learning now</h2>
+    <h2 data-reveal>What I'm learning now</h2>
     <p>
       I am building skills in analytics engineering — SQL data modelling, dbt, data testing and
       automated pipelines. Rather than just collecting certificates, I am building real
@@ -30,8 +31,8 @@ import { SITE } from '../site';
       <a href="/projects/">projects page</a>, including what worked and what didn't.
     </p>
 
-    <h2>How I work</h2>
-    <ul>
+    <h2 data-reveal>How I work</h2>
+    <ul class="principles" data-reveal>
       <li>Start with the business question, not the tool.</li>
       <li>Keep solutions simple enough for your team to maintain.</li>
       <li>Document the logic so numbers can be checked and trusted.</li>
@@ -39,3 +40,11 @@ import { SITE } from '../site';
     </ul>
   </div>
 </Base>
+
+<style>
+  .principles { list-style: none; padding: 0; display: grid; gap: 0.75rem; }
+  .principles li {
+    margin: 0; padding: 1rem 1.25rem; border: 1px solid var(--border); border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0; background: var(--surface);
+  }
+</style>
