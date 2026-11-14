@@ -2,6 +2,11 @@
 import Base from '../layouts/Base.astro';
 import { SITE } from '../site';
 import { CV } from '../data/cv';
+
+// PDF generated from this page's print layout (see README: "Updating the CV PDF").
+const PDF = '/downloads/Gilbert-Botchway-CV.pdf';
+const siteHost = new URL(Astro.site ?? 'https://example.com').host;
+const linkedinShort = SITE.linkedin.replace(/^https?:\/\/(www\.)?/, '');
 ---
 
 <Base title="CV" description={`${SITE.name} — CV: data analyst experience, skills, education and certifications.`}>
@@ -12,8 +17,12 @@ import { CV } from '../data/cv';
     <p class="contact" data-reveal style="--d:200ms">
       <span>{SITE.location}</span>
       <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
-      {SITE.linkedin && <a href={SITE.linkedin} rel="me">LinkedIn</a>}
+      {SITE.linkedin && <a href={SITE.linkedin} rel="me"><span class="screen">LinkedIn</span><span class="print">{linkedinShort}</span></a>}
+      <a class="print" href={Astro.site?.toString()}>{siteHost}</a>
     </p>
+    <div class="actions screen" data-reveal style="--d:260ms">
+      <a class="btn" href={PDF} download>Download CV (PDF) ↓</a>
+    </div>
   </header>
 
   <section class="summary card" data-reveal>
@@ -64,7 +73,7 @@ import { CV } from '../data/cv';
     </section>
   </div>
 
-  <p class="note muted">Want a copy of my full CV? <a href="/contact/">Get in touch</a> and I'll send it.</p>
+  <p class="note screen"><a class="btn secondary" href={PDF} download>Download CV (PDF) ↓</a></p>
 </Base>
 
 <style>
@@ -99,4 +108,43 @@ import { CV } from '../data/cv';
   .plain li { display: grid; gap: 0.1rem; padding-bottom: 0.9rem; border-bottom: 1px solid var(--border); }
   .plain span { color: var(--muted); font-size: 0.95rem; }
   .note { margin-top: 3rem; }
+  .print { display: none; }
+
+  /* Print / PDF layout: light, A4, compact. The PDF download is made from this. */
+  @page { size: A4; margin: 13mm 14mm; }
+  @media print {
+    :global(html), :global(body) { background: #fff !important; color: #16191d !important; font-size: 9.6pt; line-height: 1.42; }
+    :global(body::before) { display: none !important; }
+    :global(body > header), :global(body > footer) { display: none !important; }
+    :global(main) { padding: 0 !important; }
+    :global(.container) { max-width: none !important; padding: 0 !important; }
+    :global([data-reveal]) { opacity: 1 !important; transform: none !important; }
+    .screen { display: none !important; }
+    .print { display: inline !important; }
+    a { color: inherit !important; text-decoration: none !important; }
+    .eyebrow { display: none; }
+    .cv-head { padding: 0 0 6pt; border-bottom: 1.5pt solid #b07a1f; }
+    .cv-head h1 { font-size: 22pt; margin: 0 0 2pt; color: #0b1a2d; }
+    .headline { font-size: 10.5pt; color: #8a5f12 !important; }
+    .contact { margin-top: 4pt; font-size: 9pt; color: #333 !important; gap: 0 12pt; }
+    h2 { font-size: 11.5pt !important; margin: 11pt 0 5pt !important; color: #0b1a2d; text-transform: uppercase; letter-spacing: 0.06em; break-after: avoid; }
+    h3 { font-size: 10.2pt; color: #0b1a2d; }
+    .card { background: none !important; border: 0 !important; box-shadow: none !important; padding: 0 !important; }
+    .summary { margin-top: 8pt; }
+    .summary h2 { margin-top: 0 !important; }
+    .summary p { color: #16191d; font-size: 9.6pt; }
+    .timeline > li { grid-template-columns: 30mm 1fr !important; padding: 4pt 0 6pt 0 !important; border-left: 0 !important; break-inside: avoid; gap: 0 5mm !important; }
+    .timeline > li::before { display: none; }
+    .when { color: #8a5f12 !important; font-size: 8.6pt; padding-top: 1.5pt; }
+    .org { color: #444 !important; margin-bottom: 2pt; font-size: 9pt; }
+    .what ul { color: #222 !important; padding-left: 10pt; }
+    .what ul li { margin-bottom: 1.5pt; }
+    .skills { grid-template-columns: 1fr 1fr !important; gap: 4pt 8mm !important; }
+    .skills h3 { color: #8a5f12 !important; font-size: 8.6pt; margin-bottom: 1pt; }
+    .skills p { color: #222 !important; margin: 0; font-size: 9pt; }
+    .two { grid-template-columns: 1fr 1fr !important; gap: 0 8mm !important; break-inside: avoid; }
+    .plain { gap: 3pt; }
+    .plain li { padding-bottom: 3pt; border-bottom: 0.5pt solid #ddd; font-size: 9pt; }
+    .plain span { color: #444 !important; font-size: 8.6pt; }
+  }
 </style>

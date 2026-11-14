@@ -43,3 +43,13 @@ Copy `docs/unpacked-episode-template.md` to `src/content/unpacked/<short-name>.m
 it in. Put the final video at `public/unpacked/video/gilb-NNN.mp4` and a 720×1280 poster at
 `public/unpacked/posters/gilb-NNN-poster.jpg`. The episode only appears once `approved: true`.
 Keep each video under 25 MiB (the Cloudflare per-file limit).
+
+## Updating the CV PDF
+The download on `/cv/` is printed from that page's print layout, so edit `src/data/cv.ts`
+first, then regenerate the PDF:
+```bash
+npm run build
+py -m http.server 4402 --directory dist   # leave running in a second terminal
+"/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" --headless=new --no-pdf-header-footer --virtual-time-budget=8000 --print-to-pdf="public/downloads/Gilbert-Botchway-CV.pdf" http://localhost:4402/cv/
+npm run build
+```
