@@ -1,7 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import Wordmark from '../../../components/unpacked/Wordmark.astro';
-import EpisodeCard from '../../../components/unpacked/EpisodeCard.astro';
+import Carousel from '../../../components/unpacked/Carousel.astro';
 import { getEpisodes, UNPACKED } from '../../../data/unpacked';
 import { SITE } from '../../../site';
 
@@ -61,11 +61,14 @@ const skills = [
     </p>
   </section>
 
-  <h2 id="episodes">Case studies</h2>
-  <p class="muted">Each case study shows the question, the data, the method, what was found — and what the data cannot tell us.</p>
-  <div class="episodes">
-    {episodes.map((e) => <EpisodeCard episode={e} />)}
+  <div class="cs-head">
+    <div>
+      <h2 id="episodes">Case studies</h2>
+      <p class="muted">Swipe or use the arrows. Click a story to open it.</p>
+    </div>
+    <a class="btn secondary" href="/projects/unpacked/all/">View all {episodes.length} case studies</a>
   </div>
+  <Carousel episodes={episodes} />
 
   <div class="two-col">
     <section>
@@ -119,8 +122,9 @@ const skills = [
   .intro { max-width: 38rem; margin: 1rem auto 0; color: #d9dde3; }
   .idea { margin: 0.75rem 0 0; color: var(--gilb-gold); font-weight: 600; }
   .message h2 { max-width: 40rem; }
-  .episodes { display: grid; gap: 1rem; }
-  @media (min-width: 48rem) { .episodes { grid-template-columns: 1fr 1fr; } }
+  .cs-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 0.75rem 1.5rem; margin: 3rem 0 1.25rem; }
+  .cs-head h2 { margin: 0 0 0.25rem; }
+  .cs-head p { margin: 0; }
   .two-col { display: grid; gap: 0 2.5rem; }
   @media (min-width: 56rem) { .two-col { grid-template-columns: 3fr 2fr; } }
   .small { font-size: 0.925rem; }

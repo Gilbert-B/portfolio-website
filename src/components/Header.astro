@@ -8,7 +8,10 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
 
 <header>
   <div class="container bar">
-    <a class="brand" href="/">{SITE.name}</a>
+    <a class="brand" href="/" aria-label={`${SITE.name} — home`}>
+      <span class="mark" aria-hidden="true">GB</span>
+      <span class="name">{SITE.name}</span>
+    </a>
     <nav aria-label="Main">
       <ul>
         {NAV.filter((item) => item.href !== '/').map((item) => (
@@ -24,14 +27,37 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
 </header>
 
 <style>
-  header { border-bottom: 1px solid var(--border); background: var(--surface); }
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(5, 12, 23, 0.72);
+    backdrop-filter: saturate(140%) blur(14px); -webkit-backdrop-filter: saturate(140%) blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
   .bar {
     display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-    gap: 0.5rem 1.5rem; padding-top: 1rem; padding-bottom: 1rem;
+    gap: 0.5rem 1.5rem; padding-top: 0.85rem; padding-bottom: 0.85rem;
   }
-  .brand { font-weight: 700; color: var(--text); text-decoration: none; font-size: 1.1rem; }
-  ul { display: flex; flex-wrap: wrap; gap: 0.25rem 1.1rem; list-style: none; margin: 0; padding: 0; }
-  nav a { color: var(--muted); text-decoration: none; font-size: 0.975rem; }
-  nav a:hover, nav a[aria-current='page'] { color: var(--accent); }
-  nav a[aria-current='page'] { font-weight: 600; }
+  .brand { display: inline-flex; align-items: center; gap: 0.6rem; color: var(--text); text-decoration: none; }
+  .mark {
+    display: grid; place-items: center; width: 2.1rem; height: 2.1rem; border-radius: 9px;
+    font-family: var(--display); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.02em;
+    color: #1a1205; background: linear-gradient(135deg, #f3c56b, var(--accent) 60%, #c98a2c);
+    box-shadow: 0 6px 18px -6px rgba(227, 166, 64, 0.7);
+  }
+  .name { font-family: var(--display); font-weight: 600; font-size: 1.05rem; letter-spacing: -0.01em; }
+  ul { display: flex; flex-wrap: wrap; gap: 0.15rem 0.25rem; list-style: none; margin: 0; padding: 0; }
+  nav a {
+    display: block; padding: 0.35rem 0.7rem; border-radius: 999px;
+    color: var(--muted); text-decoration: none; font-size: 0.95rem; font-weight: 500;
+    transition: color 0.2s, background 0.2s;
+  }
+  nav a:hover { color: var(--text); background: rgba(255, 255, 255, 0.05); }
+  nav a[aria-current='page'] { color: var(--accent); background: var(--accent-soft); }
+  @media (max-width: 40rem) {
+    .bar { padding-top: 0.6rem; padding-bottom: 0.4rem; row-gap: 0.35rem; }
+    nav { width: 100%; margin: 0 -0.5rem; }
+    ul { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+    ul::-webkit-scrollbar { display: none; }
+    nav a { padding: 0.3rem 0.55rem; font-size: 0.9rem; white-space: nowrap; }
+  }
 </style>

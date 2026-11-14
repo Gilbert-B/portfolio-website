@@ -1,0 +1,114 @@
+---
+// Animated "dashboard" for the Home hero. Every number here is a verified figure
+// from a published Unpacked case study (src/content/unpacked/), and each tile
+// links to it. Do not add illustrative or invented numbers.
+const dots = Array.from({ length: 34 }, (_, i) => i < 24);
+---
+
+<div class="dash" data-reveal style="--d:150ms">
+  <div class="top">
+    <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span>From my case studies</span>
+  </div>
+
+  <a class="tile wide" href="/projects/unpacked/mtn-two-market-shares/">
+    <p class="k">MTN Ghana · Q1 2026 · two "market shares"</p>
+    <div class="bars">
+      <div class="b">
+        <span class="lbl">Data subscriptions</span>
+        <span class="track"><span class="fill teal" style="--w:80.12%"></span></span>
+        <span class="v"><span data-count="80.12" data-decimals="2">80.12</span>%</span>
+      </div>
+      <div class="b">
+        <span class="lbl">Data traffic</span>
+        <span class="track"><span class="fill gold" style="--w:87.31%"></span></span>
+        <span class="v"><span data-count="87.31" data-decimals="2">87.31</span>%</span>
+      </div>
+    </div>
+  </a>
+
+  <a class="tile" href="/projects/unpacked/ghanas-sleeping-wallets/">
+    <p class="big"><span data-count="59.4" data-decimals="1">59.4</span>M</p>
+    <p class="k">of 85.8M mobile money accounts not active</p>
+    <span class="track thin"><span class="fill gold" style="--w:69.2%"></span></span>
+  </a>
+
+  <a class="tile" href="/projects/unpacked/hearts-of-oak-defensive-paradox/">
+    <p class="big"><span data-count="24">24</span><small> / 34</small></p>
+    <p class="k">Hearts of Oak clean sheets — no title</p>
+    <span class="dots" aria-hidden="true">
+      {dots.map((on, i) => <i class={on ? 'on' : ''} style={`--i:${i}`}></i>)}
+    </span>
+  </a>
+
+  <svg class="spark" viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="sparkfill" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#3fc1b0" stop-opacity="0.35" />
+        <stop offset="1" stop-color="#3fc1b0" stop-opacity="0" />
+      </linearGradient>
+    </defs>
+    <path class="area" d="M0 95 C40 90 60 70 100 74 S160 40 200 52 S260 20 300 30 S360 10 400 6 V120 H0Z" fill="url(#sparkfill)" />
+    <path class="line" d="M0 95 C40 90 60 70 100 74 S160 40 200 52 S260 20 300 30 S360 10 400 6" fill="none" stroke="#3fc1b0" stroke-width="2" pathLength="1" />
+  </svg>
+</div>
+
+<style>
+  .dash {
+    position: relative; overflow: hidden;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;
+    padding: 1rem; border-radius: 20px;
+    background: linear-gradient(160deg, rgba(16, 35, 59, 0.92), rgba(7, 18, 33, 0.92));
+    border: 1px solid var(--border-strong);
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(63, 193, 176, 0.06), 0 0 80px -20px rgba(63, 193, 176, 0.25);
+  }
+  .top { grid-column: 1 / -1; display: flex; align-items: center; gap: 0.75rem; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding: 0.1rem 0.25rem 0.25rem; }
+  .lights { display: inline-flex; gap: 5px; }
+  .lights i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255, 255, 255, 0.14); }
+  .lights i:first-child { background: var(--accent); }
+
+  .tile {
+    position: relative; z-index: 1; display: block; color: inherit; text-decoration: none;
+    padding: 1rem 1.05rem; border-radius: 14px;
+    background: rgba(12, 27, 46, 0.88); border: 1px solid var(--border);
+    transition: border-color 0.3s, background 0.3s, transform 0.3s var(--ease);
+  }
+  .tile:hover { border-color: rgba(227, 166, 64, 0.5); background: rgba(18, 36, 60, 0.95); transform: translateY(-2px); }
+  .wide { grid-column: 1 / -1; }
+  .k { margin: 0; font-size: 0.82rem; color: var(--muted); line-height: 1.4; }
+  .wide .k { margin-bottom: 0.8rem; }
+  .big { margin: 0 0 0.2rem; font-family: var(--display); font-size: clamp(1.7rem, 4vw, 2.2rem); font-weight: 700; line-height: 1; color: var(--text); font-variant-numeric: tabular-nums; }
+  .big small { font-size: 0.55em; color: var(--muted); font-weight: 600; }
+
+  .bars { display: grid; gap: 0.6rem; }
+  .b { display: grid; grid-template-columns: 7.5rem 1fr auto; align-items: center; gap: 0.75rem; font-size: 0.85rem; }
+  .lbl { color: var(--muted); }
+  .v { font-family: var(--display); font-weight: 700; font-variant-numeric: tabular-nums; min-width: 4.2rem; text-align: right; }
+  .track { display: block; height: 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.07); overflow: hidden; }
+  .track.thin { height: 6px; margin-top: 0.8rem; }
+  .fill { display: block; height: 100%; width: var(--w); border-radius: inherit; }
+  .fill.teal { background: linear-gradient(90deg, #1f8f83, var(--data)); }
+  .fill.gold { background: linear-gradient(90deg, #c98a2c, var(--accent)); }
+
+  .dots { display: grid; grid-template-columns: repeat(17, 1fr); gap: 3px; margin-top: 0.8rem; }
+  .dots i { aspect-ratio: 1; border-radius: 50%; background: rgba(255, 255, 255, 0.12); }
+  .dots i.on { background: var(--data); }
+
+  .spark { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 55%; z-index: 0; opacity: 0.55; pointer-events: none; }
+
+  @media (max-width: 26rem) {
+    .dash { grid-template-columns: 1fr; }
+    .b { grid-template-columns: 6.2rem 1fr auto; gap: 0.5rem; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .dash .fill { width: 0; transition: width 1.4s var(--ease) 0.35s; }
+    :global(.js) .dash:global(.in) .fill { width: var(--w); }
+    :global(.js) .dash .dots i.on { opacity: 0; transform: scale(0.3); transition: opacity 0.3s, transform 0.4s var(--ease); transition-delay: calc(0.5s + var(--i) * 35ms); }
+    :global(.js) .dash:global(.in) .dots i.on { opacity: 1; transform: none; }
+    :global(.js) .dash .line { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.4s var(--ease) 0.2s; }
+    :global(.js) .dash:global(.in) .line { stroke-dashoffset: 0; }
+    .lights i:first-child { animation: pulse 2.4s ease-in-out infinite; }
+    @keyframes pulse { 50% { opacity: 0.35; } }
+  }
+</style>

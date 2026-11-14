@@ -1,0 +1,102 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site';
+import { CV } from '../data/cv';
+---
+
+<Base title="CV" description={`${SITE.name} — CV: data analyst experience, skills, education and certifications.`}>
+  <header class="cv-head">
+    <p class="eyebrow" data-reveal>Curriculum vitae</p>
+    <h1 data-reveal style="--d:80ms">{SITE.name}</h1>
+    <p class="headline" data-reveal style="--d:140ms">{CV.headline}</p>
+    <p class="contact" data-reveal style="--d:200ms">
+      <span>{SITE.location}</span>
+      <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      {SITE.linkedin && <a href={SITE.linkedin} rel="me">LinkedIn</a>}
+    </p>
+  </header>
+
+  <section class="summary card" data-reveal>
+    <h2>Professional summary</h2>
+    <p>{CV.summary}</p>
+  </section>
+
+  <h2 data-reveal>Experience</h2>
+  <ol class="timeline">
+    {CV.experience.map((job) => (
+      <li data-reveal>
+        <div class="when">{job.period}</div>
+        <div class="what">
+          <h3>{job.role}</h3>
+          <p class="org">{job.org} · {job.place}</p>
+          <ul>{job.points.map((p) => <li>{p}</li>)}</ul>
+        </div>
+      </li>
+    ))}
+  </ol>
+
+  <h2 data-reveal>Core skills</h2>
+  <div class="skills">
+    {CV.skills.map((s, i) => (
+      <div class="card" data-reveal style={`--d:${(i % 2) * 90}ms`}>
+        <h3>{s.area}</h3>
+        <p>{s.items}</p>
+      </div>
+    ))}
+  </div>
+
+  <div class="two">
+    <section data-reveal>
+      <h2>Education</h2>
+      <ul class="plain">
+        {CV.education.map((e) => (
+          <li><strong>{e.title}</strong><span>{e.where}{e.year && ` · ${e.year}`}</span></li>
+        ))}
+      </ul>
+    </section>
+    <section data-reveal>
+      <h2>Certifications</h2>
+      <ul class="plain">
+        {CV.certifications.map((c) => (
+          <li><strong>{c.title}</strong><span>{c.where}</span></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+
+  <p class="note muted">Want a copy of my full CV? <a href="/contact/">Get in touch</a> and I'll send it.</p>
+</Base>
+
+<style>
+  .cv-head { padding-bottom: 0.5rem; }
+  .cv-head h1 { margin-bottom: 0.4rem; }
+  .headline { margin: 0; font-size: 1.15rem; color: var(--accent); font-weight: 600; }
+  .contact { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; margin: 1rem 0 0; color: var(--muted); font-size: 0.95rem; }
+  .summary { margin-top: 2rem; }
+  .summary h2 { margin: 0 0 0.6rem; font-size: 1.2rem; }
+  .summary p { color: var(--text); font-size: 1.05rem; max-width: 52rem; }
+
+  .timeline { list-style: none; margin: 0; padding: 0; }
+  .timeline > li { display: grid; gap: 0.35rem 2rem; padding: 1.5rem 0 1.5rem 1.4rem; border-left: 2px solid var(--border-strong); position: relative; }
+  .timeline > li::before { content: ''; position: absolute; left: -7px; top: 1.85rem; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px rgba(227, 166, 64, 0.2); }
+  @media (min-width: 48rem) {
+    .timeline > li { grid-template-columns: 11rem 1fr; padding-left: 2rem; }
+  }
+  .when { font-size: 0.85rem; color: var(--accent); font-weight: 600; padding-top: 0.2rem; }
+  .what h3 { margin: 0 0 0.2rem; font-size: 1.2rem; }
+  .org { margin: 0 0 0.75rem; color: var(--muted); }
+  .what ul { margin: 0; padding-left: 1.1rem; color: var(--muted); }
+  .what ul li { margin-bottom: 0.45rem; }
+  .what ul li::marker { color: var(--accent); }
+
+  .skills { display: grid; gap: 1rem; }
+  @media (min-width: 48rem) { .skills { grid-template-columns: 1fr 1fr; } }
+  .skills h3 { color: var(--accent); font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  .two { display: grid; gap: 0 3rem; }
+  @media (min-width: 48rem) { .two { grid-template-columns: 1fr 1fr; } }
+  .plain { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.9rem; }
+  .plain li { display: grid; gap: 0.1rem; padding-bottom: 0.9rem; border-bottom: 1px solid var(--border); }
+  .plain span { color: var(--muted); font-size: 0.95rem; }
+  .note { margin-top: 3rem; }
+</style>
