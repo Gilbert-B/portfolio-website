@@ -23,7 +23,7 @@ export const SERVICES = [
     title: 'ERP data & reporting',
     summary: 'Get useful reporting out of your ERP system.',
     deliverables: ['Report requirements', 'Reports and queries on your ERP data', 'Hand-over to your team'],
-    fit: 'You run SAP Business One, Microsoft Dynamics, Zoho or similar, and reporting is a struggle.',
+    fit: 'You run SAP Business One or a similar ERP, and reporting is a struggle.',
   },
   {
     title: 'Data audits & process reviews',
