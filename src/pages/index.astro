@@ -9,7 +9,8 @@ import { getEpisodes } from '../data/unpacked';
 const episodes = await getEpisodes();
 const sectors = new Set(episodes.map((e) => e.data.domain)).size;
 
-const tools = ['Excel', 'Power BI', 'SQL', 'Apache Superset', 'Microsoft Report Builder', 'SAP Business One', 'Microsoft Dynamics', 'Zoho', 'Biz360'];
+// Tools as listed on the CV (src/data/cv.ts), plus the two ERP systems from the CV's experience.
+const tools = ['Power BI', 'DAX', 'Power Query', 'SQL', 'Python / pandas', 'MongoDB', 'Excel', 'Jupyter Notebook', 'Apache Superset', 'SAP Business One', 'Biz360 ERP'];
 
 const method = [
   { n: '01', title: 'Question', text: 'Start with the decision you need to make — not the tool or the dashboard.' },
@@ -26,7 +27,7 @@ const method = [
       <h1 data-reveal style="--d:80ms">Clear, reliable reporting for <span class="hl">growing businesses.</span></h1>
       <p class="lead" data-reveal style="--d:160ms">
         I help small and medium-sized businesses turn scattered data into dashboards and reports
-        they can trust. I have worked with data, business intelligence and ERP systems since {SITE.since}, across IT startups, telecom and fintech.
+        they can trust. I bring 6+ years of experience across data analysis, business intelligence, product analytics and ERP implementation.
       </p>
       <div class="actions" data-reveal style="--d:240ms">
         <a class="btn" href="/contact/">Start a conversation →</a>
@@ -37,10 +38,10 @@ const method = [
   </section>
 
   <ul class="proof" data-reveal>
-    <li><strong>Since {SITE.since}</strong><span>in data, BI &amp; ERP</span></li>
-    <li><strong>3 industries</strong><span>IT startups, telecom, fintech</span></li>
+    <li><strong>6+ years</strong><span>in data, BI &amp; ERP</span></li>
+    <li><strong>~15 ERP clients</strong><span>plus 5 SAP Business One implementations</span></li>
     <li><strong><b data-count={episodes.length}>{episodes.length}</b> case studies</strong><span>across {sectors} sectors, on public data</span></li>
-    <li><strong>{tools.length} tools</strong><span>from Excel to SAP Business One</span></li>
+    <li><strong>{tools.length} tools</strong><span>from SQL and Python to Power BI</span></li>
   </ul>
 
   <div class="section-head" data-reveal>
