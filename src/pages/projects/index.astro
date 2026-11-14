@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
-import FeaturedCard from '../../components/unpacked/FeaturedCard.astro';
+import Showcase from '../../components/unpacked/Showcase.astro';
 
 const projects = (await getCollection('projects')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
@@ -14,7 +14,7 @@ const projects = (await getCollection('projects')).sort((a, b) => b.data.date.va
     question, the approach, the decisions and the results — including what the data can't show.
   </p>
 
-  <div data-reveal style="--d:240ms"><FeaturedCard /></div>
+  <div data-reveal style="--d:240ms"><Showcase /></div>
 
   <h2>Analytics engineering projects</h2>
   {projects.length === 0 ? (
