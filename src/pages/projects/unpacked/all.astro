@@ -1,0 +1,27 @@
+---
+// All Unpacked case studies on one page (the overview page shows them as a carousel).
+import Base from '../../../layouts/Base.astro';
+import EpisodeCard from '../../../components/unpacked/EpisodeCard.astro';
+import { getEpisodes, UNPACKED } from '../../../data/unpacked';
+
+const episodes = await getEpisodes();
+---
+
+<Base title={`All case studies — ${UNPACKED.name}`} description="Every Unpacked by GilB case study on one page.">
+  <p class="crumb"><a href="/projects/">Projects</a> / <a href="/projects/unpacked/">{UNPACKED.name}</a> / All case studies</p>
+  <p class="eyebrow">{UNPACKED.name}</p>
+  <h1>All case studies</h1>
+  <p class="lead">Each one shows the question, the data, the method, what was found — and what the data cannot tell us.</p>
+  <div class="episodes">
+    {episodes.map((e, i) => <div data-reveal style={`--d:${(i % 2) * 90}ms`}><EpisodeCard episode={e} /></div>)}
+  </div>
+  <p class="back"><a href="/projects/unpacked/">← Back to the {UNPACKED.name} overview</a></p>
+</Base>
+
+<style>
+  .crumb { font-size: 0.9rem; color: var(--muted); margin: 0 0 1.5rem; }
+  .episodes { display: grid; gap: 1rem; margin-top: 2rem; }
+  .episodes > div { display: grid; }
+  @media (min-width: 48rem) { .episodes { grid-template-columns: 1fr 1fr; } }
+  .back { margin-top: 2.5rem; font-weight: 600; }
+</style>
