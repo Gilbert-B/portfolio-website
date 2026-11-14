@@ -6,7 +6,7 @@ export const SITE = {
   location: 'Accra, Ghana',
   since: 2020,
   email: 'botchwaykojo@gmail.com',
-  linkedin: '', // add the URL when available; empty hides the link
+  linkedin: 'https://www.linkedin.com/in/gilbert-botchway', // from the owner's CV
   description:
     'Gilbert Botchway — data and business intelligence analyst in Accra, Ghana. Dashboards, reporting automation and ERP reporting for small and medium-sized businesses.',
 };
@@ -17,5 +17,6 @@ export const NAV = [
   { href: '/projects/', label: 'Projects' },
   { href: '/notes/', label: 'Notes' },
   { href: '/about/', label: 'About' },
+  { href: '/cv/', label: 'CV' },
   { href: '/contact/', label: 'Contact' },
 ];

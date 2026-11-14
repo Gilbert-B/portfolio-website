@@ -5,13 +5,14 @@ import { SITE } from '../site';
 
 <Base title="Contact" description={`Get in touch with ${SITE.name} about dashboards, reporting and data projects.`}>
   <div class="prose">
-    <h1>Contact</h1>
-    <p class="lead">
+    <p class="eyebrow" data-reveal>Contact</p>
+    <h1 data-reveal style="--d:80ms">Let's talk about <span class="hl">your numbers.</span></h1>
+    <p class="lead" data-reveal style="--d:160ms">
       Have a reporting problem or a data question? Send a short note about your business and
       what you'd like to improve — I'll reply to arrange a conversation.
     </p>
 
-    <div class="card">
+    <div class="card glow" data-reveal style="--d:240ms">
       <p class="label">Email</p>
       <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
       {SITE.linkedin && (
@@ -22,7 +23,7 @@ import { SITE } from '../site';
       )}
     </div>
 
-    <h2>Helpful to include</h2>
+    <h2 data-reveal>Helpful to include</h2>
     <ul>
       <li>What your business does and roughly how big it is</li>
       <li>The systems you use today (e.g. Excel, an ERP, Power BI)</li>
@@ -35,5 +36,6 @@ import { SITE } from '../site';
   .card { margin-top: 1.5rem; }
   .label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 0.75rem !important; }
   .label:first-child { margin-top: 0 !important; }
-  .card a { font-size: 1.1rem; font-weight: 600; }
+  .card a { font-size: clamp(1.1rem, 3.4vw, 1.5rem); font-weight: 600; font-family: var(--display); word-break: break-word; }
+  .glow { padding: 1.75rem; border-color: rgba(227, 166, 64, 0.35); box-shadow: 0 0 60px -20px rgba(227, 166, 64, 0.35); }
 </style>

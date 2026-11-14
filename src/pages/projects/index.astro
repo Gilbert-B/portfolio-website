@@ -7,13 +7,14 @@ const projects = (await getCollection('projects')).sort((a, b) => b.data.date.va
 ---
 
 <Base title="Projects" description="Analytics and analytics-engineering projects built on realistic business problems.">
-  <h1>Projects</h1>
-  <p class="lead">
+  <p class="eyebrow" data-reveal>Projects</p>
+  <h1 data-reveal style="--d:80ms">Real data. <span class="hl">Checked work.</span></h1>
+  <p class="lead" data-reveal style="--d:160ms">
     Data research and analytics work on real public data. Each case study explains the
     question, the approach, the decisions and the results — including what the data can't show.
   </p>
 
-  <FeaturedCard />
+  <div data-reveal style="--d:240ms"><FeaturedCard /></div>
 
   <h2>Analytics engineering projects</h2>
   {projects.length === 0 ? (
