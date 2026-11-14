@@ -1,6 +1,6 @@
 // Cloudflare Workers deploy settings: serve the static Astro build from dist/.
 {
-  "name": "portfolio-website",
+  "name": "portfolio",
   "compatibility_date": "2026-10-01",
   "assets": {
     "directory": "./dist",
