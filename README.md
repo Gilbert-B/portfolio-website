@@ -50,6 +50,6 @@ first, then regenerate the PDF:
 ```bash
 npm run build
 py -m http.server 4402 --directory dist   # leave running in a second terminal
-"/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" --headless=new --no-pdf-header-footer --virtual-time-budget=8000 --print-to-pdf="public/downloads/Gilbert-Botchway-CV.pdf" http://localhost:4402/cv/
+"/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" --headless=new --no-pdf-header-footer --virtual-time-budget=8000 --print-to-pdf="public/downloads/Gilbert-Botchway.pdf" http://localhost:4402/cv/
 npm run build
 ```
