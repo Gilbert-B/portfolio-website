@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-labelledby="t d" font-family="Inter, 'Segoe UI', Arial, sans-serif">
+  <title id="t">Workforce Intelligence Suite architecture</title>
+  <desc id="d">Python generates synthetic training data as CSV and payment cases as JSON documents. Cases go into MongoDB; a Python ETL loads them incrementally into SQL Server, which also holds the training data. SQL views feed one Power BI semantic model shared by three reports.</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 10 5 0 10z" fill="#9ba8b9"/>
+    </marker>
+    <style>
+      .box { fill: #0b1a2d; stroke: rgba(255,255,255,.16); stroke-width: 1.5; }
+      .hl { fill: #10233b; stroke: #e3a640; stroke-width: 1.5; }
+      .t { fill: #eef1f5; font-size: 18px; font-weight: 600; }
+      .s { fill: #9ba8b9; font-size: 13.5px; }
+      .k { fill: #e3a640; font-size: 12px; font-weight: 600; letter-spacing: 1.4px; }
+      .l { stroke: #9ba8b9; stroke-width: 1.6; fill: none; marker-end: url(#a); }
+      .n { fill: #3fc1b0; font-size: 12.5px; }
+    </style>
+  </defs>
+
+  <!-- column labels -->
+  <text class="k" x="30" y="34">GENERATE</text>
+  <text class="k" x="300" y="34">STORE</text>
+  <text class="k" x="560" y="34">TRANSFORM &amp; CHECK</text>
+  <text class="k" x="900" y="34">REPORT</text>
+
+  <!-- generate -->
+  <rect class="box" x="30" y="60" width="220" height="150" rx="14"/>
+  <text class="t" x="50" y="95">Python generators</text>
+  <text class="s" x="50" y="122">Seeded, reproducible</text>
+  <text class="s" x="50" y="145">Training: cohorts, attendance,</text>
+  <text class="s" x="50" y="165">scores, certifications, reviews</text>
+  <text class="s" x="50" y="188">Operations: 50k cases</text>
+
+  <!-- store -->
+  <rect class="box" x="300" y="60" width="210" height="110" rx="14"/>
+  <text class="t" x="320" y="95">MongoDB</text>
+  <text class="s" x="320" y="122">Case documents: nested</text>
+  <text class="s" x="320" y="142">events, QA, rework history</text>
+
+  <rect class="box" x="300" y="300" width="210" height="110" rx="14"/>
+  <text class="t" x="320" y="335">CSV files</text>
+  <text class="s" x="320" y="362">Training records (relational)</text>
+  <text class="s" x="320" y="382">Committed, checksummed</text>
+
+  <!-- transform -->
+  <rect class="hl" x="560" y="60" width="290" height="110" rx="14"/>
+  <text class="t" x="580" y="95">Python ETL</text>
+  <text class="s" x="580" y="122">Incremental checkpoint, idempotent,</text>
+  <text class="s" x="580" y="142">bad documents rejected with a reason</text>
+
+  <rect class="hl" x="560" y="220" width="290" height="240" rx="14"/>
+  <text class="t" x="580" y="255">SQL Server</text>
+  <text class="s" x="580" y="282">core: keyed, constrained tables</text>
+  <text class="s" x="580" y="304">rpt: reporting views</text>
+  <text class="s" x="580" y="326">30/60/90-day outcome windows</text>
+  <text class="n" x="580" y="362">115 automated checks</text>
+  <text class="n" x="580" y="384">MongoDB ↔ SQL reconciliation</text>
+  <text class="n" x="580" y="406">171 pytest tests</text>
+  <text class="s" x="580" y="438">One command builds it all (~1 min)</text>
+
+  <!-- report -->
+  <rect class="hl" x="900" y="60" width="270" height="110" rx="14"/>
+  <text class="t" x="920" y="95">One semantic model</text>
+  <text class="s" x="920" y="122">22 tables · 26 relationships</text>
+  <text class="s" x="920" y="142">86 measures, built from code</text>
+
+  <rect class="box" x="900" y="220" width="270" height="68" rx="14"/>
+  <text class="t" x="920" y="250" font-size="16">01 Workforce Development</text>
+  <text class="s" x="920" y="272">Academy &amp; readiness</text>
+  <rect class="box" x="900" y="306" width="270" height="68" rx="14"/>
+  <text class="t" x="920" y="336" font-size="16">02 Payment Operations</text>
+  <text class="s" x="920" y="358">SLA, quality, graduate ramp-up</text>
+  <rect class="box" x="900" y="392" width="270" height="68" rx="14"/>
+  <text class="t" x="920" y="422" font-size="16">03 Workforce Outcomes</text>
+  <text class="s" x="920" y="444">30/60/90 days, training effect</text>
+
+  <!-- arrows -->
+  <path class="l" d="M250 115 H296"/>
+  <path class="l" d="M140 210 V355 H296"/>
+  <path class="l" d="M510 115 H556"/>
+  <path class="l" d="M705 170 V216"/>
+  <path class="l" d="M510 355 H556"/>
+  <path class="l" d="M850 300 C 875 300, 870 115, 896 115"/>
+  <path class="l" d="M1035 170 V216"/>
+</svg>
