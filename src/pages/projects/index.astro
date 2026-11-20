@@ -2,8 +2,14 @@
 import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 import Showcase from '../../components/unpacked/Showcase.astro';
+import SuiteShowcase from '../../components/projects/SuiteShowcase.astro';
 
-const projects = (await getCollection('projects')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+// Featured analytics-engineering projects get a full showcase; any others appear as cards below it.
+const FEATURED = ['workforce-intelligence-suite'];
+
+const projects = (await getCollection('projects'))
+  .filter((p) => !FEATURED.includes(p.id))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <Base title="Projects" description="Analytics and analytics-engineering projects built on realistic business problems.">
@@ -18,13 +24,9 @@ const projects = (await getCollection('projects')).sort((a, b) => b.data.date.va
   <div data-reveal style="--d:240ms"><Showcase /></div>
 
   <h2>Analytics engineering projects</h2>
-  {projects.length === 0 ? (
-    <p class="notice">
-      Data modelling and pipeline projects are in progress. They will appear here as each one is
-      completed and checked — no placeholders.
-    </p>
-  ) : (
-    <div class="grid">
+  <div data-reveal><SuiteShowcase /></div>
+  {projects.length > 0 && (
+    <div class="grid more">
       {projects.map((p) => (
         <a class="card link" href={`/projects/${p.id}/`}>
           <p class="eyebrow">{p.data.status === 'complete' ? 'Case study' : 'In progress'}</p>
@@ -41,4 +43,5 @@ const projects = (await getCollection('projects')).sort((a, b) => b.data.date.va
   .link { text-decoration: none; color: inherit; display: block; }
   .link:hover { border-color: var(--accent); }
   .link .tags { margin-top: 1rem; }
+  .more { margin-top: 1.5rem; }
 </style>
