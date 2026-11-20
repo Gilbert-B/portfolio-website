@@ -1,0 +1,88 @@
+---
+// Workforce Intelligence Suite block for Home and Projects: short intro + a carousel of the
+// three reports and the pipeline. Same look as the Unpacked showcase, so both featured
+// projects carry equal weight. Figures are from the published case study (synthetic data).
+import Carousel, { type Slide } from '../unpacked/Carousel.astro';
+
+const CASE = '/projects/workforce-intelligence-suite/';
+const IMG = '/projects/workforce-intelligence-suite/';
+const REPO = 'https://github.com/Gilbert-B/workforce-development-analytics';
+
+const slides: Slide[] = [
+  {
+    href: CASE, img: `${IMG}02_rampup.webp`, imgWidth: 2000, imgHeight: 1168,
+    imgAlt: 'Power BI report: graduate ramp-up against tenured agents',
+    id: 'Report 02', domain: 'Payment operations',
+    title: 'How fast do new graduates get up to speed?',
+    summary: 'SLA, first-time right and productivity by days in role, against a tenured benchmark that compares like with like.',
+    figures: [{ value: '75% → 84%', label: 'SLA met: first month vs tenured' }, { value: '< 1 pt', label: 'gap left after 90 days' }],
+  },
+  {
+    href: CASE, img: `${IMG}03_effectiveness.webp`, imgWidth: 2000, imgHeight: 1142,
+    imgAlt: 'Power BI report: training effectiveness',
+    id: 'Report 03', domain: 'Workforce outcomes',
+    title: 'Does training predict early performance?',
+    summary: 'Each graduate’s first 30, 60 and 90 days joined to their training record: competency, certification, watch list.',
+    figures: [{ value: '24% vs 8%', label: 'proficient by day 30: top vs bottom third' }, { value: '74%', label: 'proficient by day 90' }],
+  },
+  {
+    href: CASE, img: `${IMG}01_overview.webp`, imgWidth: 2000, imgHeight: 1083,
+    imgAlt: 'Power BI report: workforce development overview',
+    id: 'Report 01', domain: 'Training academy',
+    title: 'Who is progressing, and who is ready?',
+    summary: 'Cohorts compared week by week, attendance where unrecorded is never treated as absent, certification and readiness.',
+    figures: [{ value: '208', label: 'enrolments across 3 cohorts' }, { value: '109', label: 'approved and deployed' }],
+  },
+  {
+    href: CASE, img: `${IMG}architecture.svg`, imgWidth: 1200, imgHeight: 520,
+    imgAlt: 'Architecture: MongoDB and CSV into SQL Server via a Python ETL, one Power BI model, three reports',
+    id: 'Pipeline', domain: 'Analytics engineering',
+    title: 'MongoDB → Python → SQL Server → one model',
+    summary: 'Incremental, idempotent ETL with rejected-record logging and reconciliation; one semantic model behind all three reports.',
+    figures: [{ value: '50k', label: 'case documents loaded' }, { value: '171', label: 'automated tests' }],
+  },
+];
+---
+
+<section class="showcase">
+  <div class="intro">
+    <div class="name">
+      <p class="kicker">Featured project · Complete</p>
+      <p class="by">Analytics engineering</p>
+      <p class="mark">Workforce<br />Intelligence<span>.</span></p>
+    </div>
+    <div class="text">
+      <h3>From the training academy to the operations floor</h3>
+      <p>
+        Three Power BI reports on one shared model answer one question: does our training produce
+        people who perform, and how quickly? Built end to end on a tested MongoDB → Python → SQL Server
+        pipeline.
+      </p>
+      <p class="links">
+        <a href={CASE}>Read the case study →</a>
+        <a href={REPO}>View the code on GitHub →</a>
+      </p>
+    </div>
+  </div>
+  <Carousel slides={slides} landscape label="Workforce Intelligence Suite reports" />
+</section>
+
+<style>
+  .showcase {
+    padding: 1.25rem; border-radius: calc(var(--radius) * 1.4);
+    background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border);
+  }
+  @media (min-width: 48rem) { .showcase { padding: 1.75rem 2rem 1.5rem; } }
+  .intro { display: grid; gap: 0.75rem 2.5rem; margin-bottom: 1.25rem; }
+  @media (min-width: 48rem) { .intro { grid-template-columns: auto 1fr; align-items: end; } }
+  .kicker { margin: 0 0 0.6rem; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+  .by { margin: 0 0 0.15rem; color: var(--muted); font-weight: 600; }
+  .mark {
+    margin: 0; font-family: var(--display); font-weight: 700; line-height: 0.95;
+    font-size: 2.1rem; letter-spacing: -0.03em; color: var(--gilb-cream);
+  }
+  .mark span { color: var(--accent); }
+  h3 { margin: 0 0 0.35rem; }
+  .text p { margin: 0; color: var(--muted); max-width: 40rem; }
+  .text .links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem; margin-top: 0.75rem; font-weight: 600; }
+</style>

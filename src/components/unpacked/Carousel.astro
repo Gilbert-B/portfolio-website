@@ -1,43 +1,67 @@
 ---
-// One-at-a-time carousel of Unpacked case studies. Swipe, arrow buttons,
+// One-at-a-time carousel of case-study slides. Swipe, arrow buttons,
 // dots or keyboard arrows move between slides; clicking a slide opens it.
 // Without JavaScript it is still a horizontally scrollable, snapping row.
+// Pass `episodes` (Unpacked: portrait posters) or generic `slides`
+// (e.g. report screenshots; set `landscape` for wide images).
 import type { CollectionEntry } from 'astro:content';
 
-interface Props {
-  episodes: CollectionEntry<'unpacked'>[];
+export interface Slide {
+  href: string;
+  img: string;
+  imgWidth: number;
+  imgHeight: number;
+  imgAlt?: string;
+  id: string;          // gold label, e.g. "GILB-001" or "Report 01"
+  domain: string;      // grey label after the dot
+  title: string;
+  summary: string;
+  figures: { value: string; label: string }[];
+  cta?: string;
 }
-const { episodes } = Astro.props;
+
+interface Props {
+  episodes?: CollectionEntry<'unpacked'>[];
+  slides?: Slide[];
+  landscape?: boolean;
+  label?: string;
+}
+const { episodes, landscape = false, label = 'Unpacked case studies' } = Astro.props;
+const items: Slide[] = Astro.props.slides ?? (episodes ?? []).map((e) => ({
+  href: `/projects/unpacked/${e.id}/`, img: e.data.video.poster, imgWidth: 720, imgHeight: 1280,
+  id: e.data.storyId, domain: e.data.domain, title: e.data.title, summary: e.data.summary,
+  figures: e.data.keyFigures,
+}));
 ---
 
-<div class="carousel" data-carousel>
-  <div class="track" tabindex="0" aria-label="Unpacked case studies" role="region">
-    {episodes.map((e, i) => (
-      <a class="slide" href={`/projects/unpacked/${e.id}/`} aria-label={`${e.data.title} — case study ${i + 1} of ${episodes.length}`}>
-        <img src={e.data.video.poster} alt="" width="720" height="1280" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+<div class:list={['carousel', { landscape }]} data-carousel>
+  <div class="track" tabindex="0" aria-label={label} role="region">
+    {items.map((e, i) => (
+      <a class="slide" href={e.href} aria-label={`${e.title} — ${i + 1} of ${items.length}`}>
+        <img src={e.img} alt={e.imgAlt ?? ''} width={e.imgWidth} height={e.imgHeight} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
         <div class="info">
-          <p class="meta"><span>{e.data.storyId}</span> · {e.data.domain}</p>
-          <h3>{e.data.title}</h3>
-          <p class="summary">{e.data.summary}</p>
+          <p class="meta"><span>{e.id}</span> · {e.domain}</p>
+          <h3>{e.title}</h3>
+          <p class="summary">{e.summary}</p>
           <dl class="fig">
-            {e.data.keyFigures.slice(0, 2).map((f) => (
+            {e.figures.slice(0, 2).map((f) => (
               <div><dd>{f.value}</dd><dt>{f.label}</dt></div>
             ))}
           </dl>
-          <span class="open">Open the case study →</span>
+          <span class="open">{e.cta ?? 'Open the case study →'}</span>
         </div>
       </a>
     ))}
   </div>
 
-  <div class="controls">
+<div class="controls">
     <button type="button" class="nav prev" aria-label="Previous case study">←</button>
     <div class="dots" role="tablist">
-      {episodes.map((e, i) => (
-        <button type="button" class="dot" aria-label={`Go to ${e.data.title}`} aria-current={i === 0 ? 'true' : undefined}></button>
+      {items.map((e, i) => (
+        <button type="button" class="dot" aria-label={`Go to ${e.title}`} aria-current={i === 0 ? 'true' : undefined}></button>
       ))}
     </div>
-    <span class="count"><b>1</b> / {episodes.length}</span>
+    <span class="count"><b>1</b> / {items.length}</span>
     <button type="button" class="nav next" aria-label="Next case study">→</button>
   </div>
 </div>
@@ -124,6 +148,15 @@ const { episodes } = Astro.props;
     .slide { flex-basis: 88%; grid-template-columns: 6.5rem 1fr; gap: 0.9rem; padding: 0.85rem; align-items: start; }
     .summary { font-size: 0.875rem; }
     .open { margin-top: 0.6rem; font-size: 0.875rem; }
+  }
+
+  /* Landscape slides (report screenshots): a wide image beside the text, stacked on phones */
+  .landscape img { aspect-ratio: auto; object-fit: contain; background: #0b1a2d; border-radius: 10px; }
+  @media (min-width: 48rem) {
+    .landscape .slide { grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 2rem; padding: 1.5rem; }
+  }
+  @media (max-width: 47.99rem) {
+    .landscape .slide { grid-template-columns: 1fr; }
   }
 
   .controls { display: flex; align-items: center; justify-content: center; gap: 0.9rem; margin-top: 1rem; }
