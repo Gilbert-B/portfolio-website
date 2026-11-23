@@ -54,12 +54,12 @@ const items = MENU;
 <style>
   header {
     position: sticky; top: 0; z-index: 50;
-    background: rgba(5, 12, 23, 0.55);
+    background: rgba(250, 249, 246, 0.6);
     backdrop-filter: saturate(140%) blur(14px); -webkit-backdrop-filter: saturate(140%) blur(14px);
     border-bottom: 1px solid transparent;
     transition: background 0.3s, border-color 0.3s;
   }
-  header.scrolled, header.open { background: rgba(5, 12, 23, 0.88); border-bottom-color: var(--border); }
+  header.scrolled, header.open { background: rgba(250, 249, 246, 0.9); border-bottom-color: var(--border); }
   .bar {
     display: flex; align-items: center; justify-content: space-between;
     gap: 0.5rem 1.5rem; padding-top: 0.8rem; padding-bottom: 0.8rem;
@@ -80,10 +80,10 @@ const items = MENU;
     color: var(--muted); text-decoration: none; font-size: 0.95rem; font-weight: 500;
     transition: color 0.2s, background 0.2s, border-color 0.2s;
   }
-  nav a:hover { color: var(--text); background: rgba(255, 255, 255, 0.05); }
+  nav a:hover { color: var(--text); background: var(--tint); }
   nav a[aria-current='page'] { color: var(--accent); background: var(--accent-soft); }
-  nav a.cta { margin-left: 0.5rem; color: var(--text); border: 1px solid rgba(227, 166, 64, 0.5); }
-  nav a.cta:hover, nav a.cta[aria-current='page'] { background: var(--accent); color: #1a1205; border-color: var(--accent); }
+  nav a.cta { margin-left: 0.5rem; color: var(--text); border: 1px solid var(--border-strong); }
+  nav a.cta:hover, nav a.cta[aria-current='page'] { background: var(--accent-fill); color: #1a1205; border-color: var(--accent-fill); }
 
   .toggle { display: none; }
 
@@ -99,7 +99,7 @@ const items = MENU;
     nav {
       position: absolute; left: 0; right: 0; top: 100%;
       background: var(--bg); border-bottom: 1px solid var(--border);
-      box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 30px 50px -20px rgba(15, 27, 45, 0.3);
       padding: 0.5rem 1rem 1.25rem;
       visibility: hidden; opacity: 0; transform: translateY(-8px);
       transition: opacity 0.25s, transform 0.25s var(--ease), visibility 0s 0.25s;
@@ -107,6 +107,6 @@ const items = MENU;
     .open nav { visibility: visible; opacity: 1; transform: none; transition: opacity 0.25s, transform 0.25s var(--ease); }
     ul { flex-direction: column; align-items: stretch; gap: 0.15rem; }
     nav a { padding: 0.8rem 0.9rem; font-size: 1.05rem; border-radius: 10px; }
-    nav a.cta { margin: 0.6rem 0 0; text-align: center; background: var(--accent); color: #1a1205; border-color: var(--accent); }
+    nav a.cta { margin: 0.6rem 0 0; text-align: center; background: var(--accent-fill); color: #1a1205; border-color: var(--accent-fill); }
   }
 </style>

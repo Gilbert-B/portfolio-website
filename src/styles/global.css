@@ -1,31 +1,67 @@
 /* Design tokens — change colours and spacing here, not in components.
-   "Bold dark": one deep-navy theme for the whole site, gold for emphasis,
-   teal for data lines. Taken from the Unpacked by GilB brand. */
+   "Light with dark showcases": warm off-white pages and navy ink for text;
+   gold is the brand accent. Any element with class="dark" switches back to
+   the deep-navy Unpacked by GilB palette (project showcases, hero dashboard,
+   footer), so components work unchanged on either background. */
 :root {
-  --bg: #050c17;
-  --bg-2: #081425;
-  --surface: #0b1a2d;
-  --surface-2: #10233b;
-  --text: #eef1f5;
-  --muted: #9ba8b9;
-  --border: rgba(255, 255, 255, 0.09);
-  --border-strong: rgba(255, 255, 255, 0.16);
-  --accent: #e3a640;          /* gold — links, buttons, highlights */
-  --accent-soft: rgba(227, 166, 64, 0.12);
-  --data: #3fc1b0;            /* teal — charts and data accents */
-  --data-soft: rgba(63, 193, 176, 0.14);
+  --bg: #faf9f6;
+  --bg-2: #f3f1ec;
+  --surface: #ffffff;
+  --surface-2: #ffffff;
+  --text: #0f1b2d;
+  --muted: #5b6676;
+  --border: rgba(15, 27, 45, 0.1);
+  --border-strong: rgba(15, 27, 45, 0.18);
+  --accent: #98620f;          /* deep gold — links, labels, highlights (readable on white) */
+  --accent-fill: #e3a640;     /* bright gold — button backgrounds */
+  --accent-soft: rgba(227, 166, 64, 0.16);
+  --hl-from: #c98a2c; --hl-to: #8a560c;   /* gold text highlight in headings */
+  --data: #1f8f83;            /* teal — charts and data accents */
+  --data-soft: rgba(31, 143, 131, 0.12);
+  --tint: rgba(15, 27, 45, 0.04);         /* subtle hover / track fill */
+  --shadow: 0 1px 2px rgba(15, 27, 45, 0.05), 0 12px 32px -18px rgba(15, 27, 45, 0.25);
+  --shadow-lift: 0 2px 4px rgba(15, 27, 45, 0.05), 0 22px 44px -20px rgba(15, 27, 45, 0.35);
   --radius: 14px;
   --max: 72rem;
-  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-  --display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --display: var(--font);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   /* Unpacked by GilB brand */
   --gilb-navy: #071629;
   --gilb-teal: #0e4a5c;
   --gilb-cream: #f6f0e4;
   --gilb-gold: #e3a640;
+  --gilb-gold-text: #98620f;
+  color-scheme: light;
+}
+
+/* Dark zones: the original deep-navy palette */
+.dark, .gilb-panel {
+  --bg: #050c17;
+  --bg-2: #081425;
+  --surface: #0b1a2d;
+  --surface-2: #10233b;
+  --text: #eef1f5;
+  --muted: #a3afbf;
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --accent: #e3a640;
+  --accent-soft: rgba(227, 166, 64, 0.12);
+  --hl-from: #f3c56b; --hl-to: #d4862b;
+  --data: #3fc1b0;
+  --data-soft: rgba(63, 193, 176, 0.14);
+  --tint: rgba(255, 255, 255, 0.06);
+  --shadow: 0 18px 40px -20px rgba(0, 0, 0, 0.8);
+  --shadow-lift: 0 18px 40px -20px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(227, 166, 64, 0.15);
   --gilb-gold-text: #e3a640;
+  color: var(--text);
   color-scheme: dark;
+}
+/* A dark showcase block: navy panel on the light page */
+.dark.block {
+  background: radial-gradient(120% 90% at 100% 0%, rgba(14, 74, 92, 0.55), transparent 60%), linear-gradient(180deg, #0a1728, #050c17);
+  border: 1px solid rgba(15, 27, 45, 0.6);
+  box-shadow: 0 30px 60px -30px rgba(7, 22, 41, 0.55);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -38,9 +74,8 @@ body {
   min-height: 100vh;
   background-color: var(--bg);
   background-image:
-    radial-gradient(60rem 40rem at 85% -10%, rgba(14, 74, 92, 0.55), transparent 60%),
-    radial-gradient(45rem 30rem at -10% 20%, rgba(227, 166, 64, 0.07), transparent 60%),
-    linear-gradient(var(--bg), var(--bg-2));
+    radial-gradient(60rem 36rem at 90% -10%, rgba(14, 74, 92, 0.08), transparent 60%),
+    radial-gradient(45rem 30rem at -10% 10%, rgba(227, 166, 64, 0.08), transparent 60%);
   background-repeat: no-repeat;
   color: var(--text);
   font-family: var(--font);
@@ -49,23 +84,24 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Faint data-grid texture behind everything */
+/* Faint data-grid texture at the top of the page */
 body::before {
-  content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  content: ''; position: absolute; inset: 0 0 auto; height: 44rem; z-index: -1; pointer-events: none;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    linear-gradient(rgba(15, 27, 45, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 27, 45, 0.045) 1px, transparent 1px);
   background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 70%);
 }
 
-::selection { background: var(--accent); color: var(--bg); }
+::selection { background: var(--accent-fill); color: #1a1205; }
 
 a { color: var(--accent); text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
 a:hover { text-decoration-thickness: 2px; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
-h1, h2, h3 { font-family: var(--display); line-height: 1.12; letter-spacing: -0.02em; font-weight: 700; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.12; letter-spacing: -0.025em; font-weight: 700; }
+h3 { font-weight: 700; }
 h1 { font-size: clamp(2.3rem, 6vw, 4rem); margin: 0 0 1.1rem; }
 h2 { font-size: clamp(1.6rem, 3.4vw, 2.3rem); margin: 4rem 0 1.25rem; }
 h3 { font-size: 1.2rem; margin: 0 0 0.5rem; letter-spacing: -0.01em; }
@@ -80,13 +116,13 @@ main { padding: 3rem 0 5rem; }
 .eyebrow {
   display: inline-flex; align-items: center; gap: 0.5rem;
   text-transform: uppercase; letter-spacing: 0.14em;
-  font-size: 0.78rem; font-weight: 600; color: var(--accent); margin: 0 0 1rem;
+  font-size: 0.78rem; font-weight: 700; color: var(--accent); margin: 0 0 1rem;
 }
 .eyebrow::before { content: ''; width: 1.6rem; height: 2px; background: currentColor; border-radius: 2px; }
 
 /* Gold highlight for a word or phrase inside a heading */
 .hl {
-  background: linear-gradient(100deg, #f3c56b, var(--accent) 45%, #d4862b);
+  background: linear-gradient(100deg, var(--hl-from), var(--hl-to));
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 
@@ -108,8 +144,9 @@ main { padding: 3rem 0 5rem; }
 .panel {
   background: linear-gradient(180deg, var(--surface-2), var(--surface));
   border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem;
+  box-shadow: var(--shadow);
 }
-.panel h2 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent); margin: 0 0 1rem; font-family: var(--font); font-weight: 600; }
+.panel h2 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent); margin: 0 0 1rem; font-family: var(--font); font-weight: 700; }
 .facts { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.9rem; }
 .facts li { display: grid; gap: 0.1rem; padding-bottom: 0.9rem; border-bottom: 1px solid var(--border); }
 .facts li:last-child { border-bottom: 0; padding-bottom: 0; }
@@ -119,27 +156,27 @@ main { padding: 3rem 0 5rem; }
 .btn {
   display: inline-flex; align-items: center; gap: 0.5rem;
   padding: 0.8rem 1.35rem; border-radius: 999px;
-  background: var(--accent); color: #1a1205; font-weight: 600; text-decoration: none;
-  box-shadow: 0 0 0 0 rgba(227, 166, 64, 0.4), 0 8px 24px -8px rgba(227, 166, 64, 0.55);
+  background: var(--accent-fill); color: #1a1205; font-weight: 700; text-decoration: none;
+  box-shadow: 0 8px 22px -10px rgba(201, 138, 44, 0.75);
   transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), background 0.25s;
 }
-.btn:hover { transform: translateY(-2px); background: #f0b552; box-shadow: 0 0 0 4px rgba(227, 166, 64, 0.15), 0 14px 30px -10px rgba(227, 166, 64, 0.7); }
+.btn:hover { transform: translateY(-2px); background: #f0b552; box-shadow: 0 0 0 4px rgba(227, 166, 64, 0.18), 0 14px 30px -12px rgba(201, 138, 44, 0.8); }
 .btn.secondary { background: transparent; color: var(--text); border: 1px solid var(--border-strong); box-shadow: none; }
-.btn.secondary:hover { border-color: var(--accent); color: var(--accent); }
+.btn.secondary:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
 .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
 
 .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); }
 .card {
   position: relative;
   background: linear-gradient(180deg, var(--surface-2), var(--surface));
-  border: 1px solid var(--border);
+  border: 1px solid var(--border); box-shadow: var(--shadow);
   border-radius: var(--radius); padding: 1.4rem 1.5rem;
   transition: transform 0.35s var(--ease), border-color 0.35s, box-shadow 0.35s var(--ease);
 }
 .card p { margin: 0.25rem 0 0; color: var(--muted); }
 .card.lift:hover, a.card:hover {
   transform: translateY(-4px); border-color: rgba(227, 166, 64, 0.45);
-  box-shadow: 0 18px 40px -20px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(227, 166, 64, 0.15);
+  box-shadow: var(--shadow-lift);
 }
 
 .tags { display: flex; flex-wrap: wrap; gap: 0.45rem; padding: 0; margin: 0; list-style: none; }
@@ -170,7 +207,7 @@ main { padding: 3rem 0 5rem; }
 .prose .shot img {
   display: block; width: 100%; height: auto;
   border: 1px solid var(--border-strong); border-radius: var(--radius);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--shadow-lift);
   background: var(--surface);
 }
 .prose .shot figcaption { margin-top: 0.7rem; color: var(--muted); font-size: 0.95rem; }

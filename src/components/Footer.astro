@@ -7,7 +7,7 @@ const links = MENU;
 const showCta = !Astro.url.pathname.startsWith('/contact');
 ---
 
-<footer>
+<footer class="dark">
   <div class="container">
     {showCta && <div class="cta">
       <p class="big">Have numbers you don't fully trust? <span class="hl">Let's look at them together.</span></p>
@@ -25,7 +25,7 @@ const showCta = !Astro.url.pathname.startsWith('/contact');
 </footer>
 
 <style>
-  footer { border-top: 1px solid var(--border); color: var(--muted); font-size: 0.925rem; background: rgba(0, 0, 0, 0.2); }
+  footer { margin-top: 2rem; color: var(--muted); font-size: 0.925rem; background: radial-gradient(50rem 20rem at 90% 0%, rgba(14, 74, 92, 0.5), transparent 70%), #071221; }
   .cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.25rem 2rem; padding: 3rem 0 2.5rem; border-bottom: 1px solid var(--border); }
   .big { margin: 0; font-family: var(--display); font-size: clamp(1.35rem, 3vw, 1.9rem); font-weight: 600; line-height: 1.2; color: var(--text); max-width: 36rem; letter-spacing: -0.015em; }
   .cta + .row { border-top: 0; }

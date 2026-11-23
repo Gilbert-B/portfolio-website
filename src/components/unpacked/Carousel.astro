@@ -177,7 +177,7 @@ const items: Slide[] = Astro.props.slides ?? (episodes ?? []).map((e) => ({
   .nav:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
   .nav:disabled { opacity: 0.35; cursor: default; }
   .dots { display: flex; gap: 0.45rem; }
-  .dot { width: 0.6rem; height: 0.6rem; padding: 0; border-radius: 999px; border: 0; cursor: pointer; background: rgba(255, 255, 255, 0.2); transition: width 0.3s var(--ease), background 0.3s; }
+  .dot { width: 0.6rem; height: 0.6rem; padding: 0; border-radius: 999px; border: 0; cursor: pointer; background: var(--border-strong); transition: width 0.3s var(--ease), background 0.3s; }
   .dot[aria-current] { width: 1.8rem; background: var(--accent); }
   .count { font-size: 0.85rem; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 2.5rem; text-align: center; }
   .count b { color: var(--text); }

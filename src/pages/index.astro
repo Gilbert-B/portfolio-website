@@ -131,7 +131,7 @@ const method = [
     list-style: none; margin: 3rem 0 0; padding: 0;
     display: grid; grid-template-columns: repeat(2, 1fr);
     border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--surface); box-shadow: var(--shadow);
   }
   @media (min-width: 48rem) { .proof { grid-template-columns: repeat(4, 1fr); } }
   .proof li { padding: 1.2rem 1.25rem; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); display: grid; gap: 0.15rem; }
@@ -180,7 +180,7 @@ const method = [
   @media (min-width: 48rem) { .method { grid-template-columns: repeat(4, 1fr); gap: 1.25rem; } }
   .method li { position: relative; padding-top: 1.4rem; border-top: 2px solid var(--border-strong); }
   .method li::before { content: ''; position: absolute; top: -2px; left: 0; width: 3rem; height: 2px; background: var(--accent); }
-  .step { font-family: var(--display); font-size: 2.6rem; font-weight: 700; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(227, 166, 64, 0.7); display: block; margin-bottom: 0.75rem; }
+  .step { font-family: var(--display); font-size: 2.6rem; font-weight: 700; line-height: 1; color: transparent; -webkit-text-stroke: 1.25px var(--accent); display: block; margin-bottom: 0.75rem; }
   .method h3 { font-size: 1.25rem; }
   .method p { margin: 0; color: var(--muted); font-size: 0.975rem; }
 
