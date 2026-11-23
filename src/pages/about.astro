@@ -1,52 +1,85 @@
 ---
 import Base from '../layouts/Base.astro';
 import { SITE } from '../site';
+import { CV } from '../data/cv';
 ---
 
 <Base title="About">
-  <div class="prose">
-    <p class="eyebrow" data-reveal>About</p>
-    <h1 data-reveal style="--d:80ms">Data, from both <span class="hl">sides of the table.</span></h1>
-    <p class="lead" data-reveal style="--d:160ms">
-      I'm {SITE.name}, a data and business intelligence analyst based in {SITE.location}.
-    </p>
+  <p class="eyebrow" data-reveal>About</p>
+  <h1 data-reveal style="--d:80ms">Data, from both <span class="hl">sides of the table.</span></h1>
 
-    <p>
-      I have 6+ years of experience across data analysis, business intelligence, product
-      analytics and ERP systems. Today I work as a data analyst, building Power BI and Apache
-      Superset reporting and automated Python and SQL data pipelines. Alongside that I work
-      part-time as product manager for the Biz360 ERP, and before that I worked on five SAP
-      Business One implementations — migrating data, configuring systems and training the
-      people who use them every day. <a href="/cv/">See my full CV →</a>
-    </p>
-    <p>
-      That mix means I look at data from both sides: the technical side of getting it out of
-      systems and into shape, and the business side of making sure the numbers answer real
-      questions and that people know how to use them.
-    </p>
+  <div class="split">
+    <div class="prose">
+      <p class="lead" data-reveal style="--d:160ms">
+        I'm {SITE.name}, a data and business intelligence analyst based in {SITE.location}.
+      </p>
 
-    <h2 data-reveal>What I'm learning now</h2>
-    <p>
-      I am building skills in analytics engineering — SQL data modelling, dbt, data testing and
-      automated pipelines. Rather than just collecting certificates, I am building real
-      projects on realistic business problems and publishing them on the
-      <a href="/projects/">projects page</a>, including what worked and what didn't.
-    </p>
+      <p>
+        I have 6+ years of experience across data analysis, business intelligence, product
+        analytics and ERP systems. Today I work as a data analyst, building Power BI and Apache
+        Superset reporting and automated Python and SQL data pipelines. Alongside that I work
+        part-time as product manager for the Biz360 ERP, and before that I worked on five SAP
+        Business One implementations — migrating data, configuring systems and training the
+        people who use them every day. <a href="/cv/">See my full CV →</a>
+      </p>
+      <p>
+        That mix means I look at data from both sides: the technical side of getting it out of
+        systems and into shape, and the business side of making sure the numbers answer real
+        questions and that people know how to use them.
+      </p>
 
-    <h2 data-reveal>How I work</h2>
-    <ul class="principles" data-reveal>
-      <li>Start with the business question, not the tool.</li>
-      <li>Keep solutions simple enough for your team to maintain.</li>
-      <li>Document the logic so numbers can be checked and trusted.</li>
-      <li>Be honest about what the data can and cannot tell you.</li>
-    </ul>
+      <h2 data-reveal>What I'm learning now</h2>
+      <p>
+        I am building skills in analytics engineering — SQL data modelling, dbt, data testing and
+        automated pipelines. Rather than just collecting certificates, I am building real
+        projects on realistic business problems and publishing them on the{' '}
+        <a href="/projects/">projects page</a>, including what worked and what didn't.
+      </p>
+
+      <h2 data-reveal>How I work</h2>
+      <ol class="principles" data-reveal>
+        <li>Start with the business question, not the tool.</li>
+        <li>Keep solutions simple enough for your team to maintain.</li>
+        <li>Document the logic so numbers can be checked and trusted.</li>
+        <li>Be honest about what the data can and cannot tell you.</li>
+      </ol>
+    </div>
+
+    <aside data-reveal style="--d:200ms">
+      <div class="panel">
+        <h2>At a glance</h2>
+        <ul class="facts">
+          <li><b>{SITE.role}</b><span>{SITE.location} · available remotely</span></li>
+          <li><b>6+ years</b><span>data analysis, BI, product analytics and ERP</span></li>
+          {CV.education.slice(0, 2).map((e) => (
+            <li><b>{e.title}</b><span>{e.where}{e.year && `, ${e.year}`}</span></li>
+          ))}
+          <li><b>Power BI · SQL · Python</b><span>plus DAX, MongoDB, Excel and Apache Superset</span></li>
+        </ul>
+        <div class="aside-actions">
+          <a class="btn" href="/contact/">Get in touch →</a>
+          <a class="btn secondary" href="/cv/">View CV</a>
+        </div>
+      </div>
+    </aside>
   </div>
 </Base>
 
 <style>
-  .principles { list-style: none; padding: 0; display: grid; gap: 0.75rem; }
+  .split { margin-top: 0.5rem; }
+  .split .lead { margin-top: 0; }
+  .principles { list-style: none; padding: 0; display: grid; gap: 0.75rem; counter-reset: p; }
   .principles li {
-    margin: 0; padding: 1rem 1.25rem; border: 1px solid var(--border); border-left: 3px solid var(--accent);
-    border-radius: 0 var(--radius) var(--radius) 0; background: var(--surface);
+    counter-increment: p; display: flex; gap: 1rem; align-items: baseline;
+    margin: 0; padding: 1rem 1.25rem; border: 1px solid var(--border);
+    border-radius: var(--radius); background: var(--surface);
+    transition: border-color 0.3s, transform 0.3s var(--ease);
   }
+  .principles li::before {
+    content: counter(p, decimal-leading-zero); font-family: var(--display); font-weight: 700;
+    color: var(--accent); font-size: 0.9rem;
+  }
+  .principles li:hover { border-color: rgba(227, 166, 64, 0.4); transform: translateX(4px); }
+  .aside-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.4rem; }
+  .aside-actions .btn { padding: 0.65rem 1.1rem; font-size: 0.95rem; }
 </style>

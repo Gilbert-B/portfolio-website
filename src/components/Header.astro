@@ -1,22 +1,32 @@
 ---
-import { SITE, NAV } from '../site';
+import { SITE } from '../site';
+import { MENU } from '../data/nav';
 
 // Highlight the current section, e.g. /projects/foo/ → Projects.
 const path = Astro.url.pathname;
 const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+
+const items = MENU;
 ---
 
-<header>
+<header data-header>
   <div class="container bar">
     <a class="brand" href="/" aria-label={`${SITE.name} — home`}>
       <span class="mark" aria-hidden="true">GB</span>
       <span class="name">{SITE.name}</span>
     </a>
-    <nav aria-label="Main">
+    <button class="toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
+      <span></span><span></span>
+    </button>
+    <nav id="site-nav" aria-label="Main">
       <ul>
-        {NAV.filter((item) => item.href !== '/').map((item) => (
+        {items.map((item) => (
           <li>
-            <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+            <a
+              href={item.href}
+              class:list={{ cta: item.href === '/contact/' }}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+            >
               {item.label}
             </a>
           </li>
@@ -26,16 +36,33 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
   </div>
 </header>
 
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]')!;
+  const toggle = header.querySelector<HTMLButtonElement>('.toggle')!;
+  const setOpen = (open: boolean) => {
+    header.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+  };
+  toggle.addEventListener('click', () => setOpen(!header.classList.contains('open')));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+  // Slightly stronger background once the page has scrolled.
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
+
 <style>
   header {
     position: sticky; top: 0; z-index: 50;
-    background: rgba(5, 12, 23, 0.72);
+    background: rgba(5, 12, 23, 0.55);
     backdrop-filter: saturate(140%) blur(14px); -webkit-backdrop-filter: saturate(140%) blur(14px);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid transparent;
+    transition: background 0.3s, border-color 0.3s;
   }
+  header.scrolled, header.open { background: rgba(5, 12, 23, 0.88); border-bottom-color: var(--border); }
   .bar {
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-    gap: 0.5rem 1.5rem; padding-top: 0.85rem; padding-bottom: 0.85rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 0.5rem 1.5rem; padding-top: 0.8rem; padding-bottom: 0.8rem;
   }
   .brand { display: inline-flex; align-items: center; gap: 0.6rem; color: var(--text); text-decoration: none; }
   .mark {
@@ -43,21 +70,43 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
     font-family: var(--display); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.02em;
     color: #1a1205; background: linear-gradient(135deg, #f3c56b, var(--accent) 60%, #c98a2c);
     box-shadow: 0 6px 18px -6px rgba(227, 166, 64, 0.7);
+    transition: transform 0.3s var(--ease);
   }
+  .brand:hover .mark { transform: rotate(-6deg) scale(1.05); }
   .name { font-family: var(--display); font-weight: 600; font-size: 1.05rem; letter-spacing: -0.01em; }
-  ul { display: flex; flex-wrap: wrap; gap: 0.15rem 0.25rem; list-style: none; margin: 0; padding: 0; }
+  ul { display: flex; align-items: center; gap: 0.25rem; list-style: none; margin: 0; padding: 0; }
   nav a {
-    display: block; padding: 0.35rem 0.7rem; border-radius: 999px;
+    display: block; padding: 0.4rem 0.8rem; border-radius: 999px;
     color: var(--muted); text-decoration: none; font-size: 0.95rem; font-weight: 500;
-    transition: color 0.2s, background 0.2s;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
   }
   nav a:hover { color: var(--text); background: rgba(255, 255, 255, 0.05); }
   nav a[aria-current='page'] { color: var(--accent); background: var(--accent-soft); }
-  @media (max-width: 40rem) {
-    .bar { padding-top: 0.6rem; padding-bottom: 0.4rem; row-gap: 0.35rem; }
-    nav { width: 100%; margin: 0 -0.5rem; }
-    ul { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
-    ul::-webkit-scrollbar { display: none; }
-    nav a { padding: 0.3rem 0.55rem; font-size: 0.9rem; white-space: nowrap; }
+  nav a.cta { margin-left: 0.5rem; color: var(--text); border: 1px solid rgba(227, 166, 64, 0.5); }
+  nav a.cta:hover, nav a.cta[aria-current='page'] { background: var(--accent); color: #1a1205; border-color: var(--accent); }
+
+  .toggle { display: none; }
+
+  @media (max-width: 47.99rem) {
+    .toggle {
+      display: grid; place-content: center; gap: 6px; width: 2.6rem; height: 2.6rem; padding: 0;
+      border-radius: 10px; border: 1px solid var(--border-strong); background: var(--surface); cursor: pointer;
+    }
+    .toggle span { display: block; width: 18px; height: 2px; border-radius: 2px; background: var(--text); transition: transform 0.3s var(--ease); }
+    .open .toggle span:first-child { transform: translateY(4px) rotate(45deg); }
+    .open .toggle span:last-child { transform: translateY(-4px) rotate(-45deg); }
+
+    nav {
+      position: absolute; left: 0; right: 0; top: 100%;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.7);
+      padding: 0.5rem 1rem 1.25rem;
+      visibility: hidden; opacity: 0; transform: translateY(-8px);
+      transition: opacity 0.25s, transform 0.25s var(--ease), visibility 0s 0.25s;
+    }
+    .open nav { visibility: visible; opacity: 1; transform: none; transition: opacity 0.25s, transform 0.25s var(--ease); }
+    ul { flex-direction: column; align-items: stretch; gap: 0.15rem; }
+    nav a { padding: 0.8rem 0.9rem; font-size: 1.05rem; border-radius: 10px; }
+    nav a.cta { margin: 0.6rem 0 0; text-align: center; background: var(--accent); color: #1a1205; border-color: var(--accent); }
   }
 </style>

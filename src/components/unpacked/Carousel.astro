@@ -145,9 +145,16 @@ const items: Slide[] = Astro.props.slides ?? (episodes ?? []).map((e) => ({
   @media (min-width: 48rem) { .fig { display: grid; } .summary { font-size: 1.05rem; } }
   .open { display: inline-block; margin-top: 1rem; color: var(--gilb-gold); font-weight: 600; font-size: 0.95rem; }
   @media (max-width: 47.99rem) {
-    .slide { flex-basis: 88%; grid-template-columns: 6.5rem 1fr; gap: 0.9rem; padding: 0.85rem; align-items: start; }
-    .summary { font-size: 0.875rem; }
-    .open { margin-top: 0.6rem; font-size: 0.875rem; }
+    /* Phones: poster beside the heading, summary and link full width underneath */
+    .slide { flex-basis: 88%; grid-template-columns: 5.5rem 1fr; gap: 0.9rem; padding: 0.9rem; align-items: start; }
+    .slide:not(.active) { opacity: 0.6; }
+    .info { display: contents; }
+    .slide > img { grid-row: 1 / span 2; }
+    .meta { grid-column: 2; align-self: end; margin: 0; letter-spacing: 0.06em; }
+    h3 { grid-column: 2; align-self: start; font-size: 1.2rem; margin: 0; }
+    .summary, .open { grid-column: 1 / -1; }
+    .summary { font-size: 0.92rem; }
+    .open { margin-top: 0; font-size: 0.9rem; }
   }
 
   /* Landscape slides (report screenshots): a wide image beside the text, stacked on phones */
@@ -156,7 +163,9 @@ const items: Slide[] = Astro.props.slides ?? (episodes ?? []).map((e) => ({
     .landscape .slide { grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 2rem; padding: 1.5rem; }
   }
   @media (max-width: 47.99rem) {
-    .landscape .slide { grid-template-columns: 1fr; }
+    .landscape .slide { grid-template-columns: 1fr; gap: 0.6rem; }
+    .landscape .slide > img { grid-row: auto; margin-bottom: 0.3rem; }
+    .landscape .meta, .landscape h3 { grid-column: 1 / -1; }
   }
 
   .controls { display: flex; align-items: center; justify-content: center; gap: 0.9rem; margin-top: 1rem; }

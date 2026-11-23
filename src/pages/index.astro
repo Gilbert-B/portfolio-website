@@ -58,6 +58,7 @@ const method = [
         <span class="num">{String(i + 1).padStart(2, '0')}</span>
         <h3>{s.title}</h3>
         <p>{s.summary}</p>
+        <span class="go" aria-hidden="true">→</span>
       </a>
     ))}
   </div>
@@ -112,7 +113,7 @@ const method = [
     <p class="eyebrow">Currently building</p>
     <p>
       I am expanding into analytics engineering — data modelling, tested data pipelines and
-      automated reporting. The first is complete:
+      automated reporting. The first is complete:{' '}
       <a href="/projects/workforce-intelligence-suite/">Workforce Intelligence Suite</a>, three
       Power BI reports on one shared model, fed by a MongoDB → Python → SQL Server pipeline.
       More will be added as each one is completed. <a href="/projects/">See all projects →</a>
@@ -147,6 +148,33 @@ const method = [
     opacity: 0; transition: opacity 0.4s;
   }
   .svc:hover::after { opacity: 1; }
+  .go {
+    position: absolute; top: 1.2rem; right: 1.3rem; color: var(--accent); font-size: 1.1rem;
+    opacity: 0; transform: translateX(-6px); transition: opacity 0.3s, transform 0.3s var(--ease);
+  }
+  .svc:hover .go { opacity: 1; transform: none; }
+
+  /* Phones: tighter hero, compact stats and service cards */
+  @media (max-width: 47.99rem) {
+    .hero { padding-top: 0.5rem; }
+    .copy .lead { font-size: 1.075rem; }
+    .actions .btn { flex: 1 1 auto; justify-content: center; }
+    .proof { margin-top: 2.25rem; }
+    .proof li { padding: 1rem; }
+    .proof strong { font-size: 1.1rem; line-height: 1.25; }
+    .proof > li > span { font-size: 0.8rem; line-height: 1.4; }
+    .proof li:nth-child(2n) { border-right: 0; }
+    .proof li:nth-child(n + 3) { border-bottom: 0; }
+    .svc { display: grid; grid-template-columns: 2.25rem 1fr; column-gap: 0.25rem; padding: 1.1rem 1.15rem; }
+    .num { margin: 0.2rem 0 0; grid-row: span 2; }
+    .svc h3 { margin-bottom: 0.2rem; font-size: 1.08rem; }
+    .svc p { font-size: 0.95rem; }
+    .go { display: none; }
+    .method li { display: grid; grid-template-columns: 3.4rem 1fr; column-gap: 0.75rem; padding-top: 1rem; }
+    .step { grid-row: span 2; font-size: 2rem; margin: 0; }
+    .method h3 { margin-bottom: 0.2rem; }
+    .building { margin-top: 3.5rem; padding: 1.25rem; }
+  }
 
   .method { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; counter-reset: none; }
   @media (min-width: 48rem) { .method { grid-template-columns: repeat(4, 1fr); gap: 1.25rem; } }

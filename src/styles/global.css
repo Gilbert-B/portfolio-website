@@ -93,6 +93,28 @@ main { padding: 3rem 0 5rem; }
 .section-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 0.5rem 2rem; margin: 5rem 0 1.5rem; }
 .section-head h2 { margin: 0; }
 .section-head p { margin: 0; max-width: 30rem; }
+@media (max-width: 47.99rem) {
+  main { padding: 2rem 0 3.5rem; }
+  .section-head { margin: 3.75rem 0 1.25rem; }
+  h2 { margin-top: 3rem; }
+}
+
+/* Two-column page layout: main text plus a sticky side panel (About, Contact) */
+.split { display: grid; gap: 2.5rem; }
+@media (min-width: 60rem) {
+  .split { grid-template-columns: minmax(0, 1fr) 21rem; gap: 4rem; align-items: start; }
+  .split > aside { position: sticky; top: 6rem; }
+}
+.panel {
+  background: linear-gradient(180deg, var(--surface-2), var(--surface));
+  border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem;
+}
+.panel h2 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent); margin: 0 0 1rem; font-family: var(--font); font-weight: 600; }
+.facts { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.9rem; }
+.facts li { display: grid; gap: 0.1rem; padding-bottom: 0.9rem; border-bottom: 1px solid var(--border); }
+.facts li:last-child { border-bottom: 0; padding-bottom: 0; }
+.facts b { font-weight: 600; color: var(--text); font-size: 0.98rem; line-height: 1.35; }
+.facts span { color: var(--muted); font-size: 0.875rem; line-height: 1.4; }
 
 .btn {
   display: inline-flex; align-items: center; gap: 0.5rem;
